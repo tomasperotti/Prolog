@@ -13,8 +13,7 @@ public class Matriz {
 			for(int j=1; j < 8; j++) {
 			
 				matriz[i][j] ="negro";
-				
-			
+						
 			}
 		}
 	
@@ -26,6 +25,10 @@ public class Matriz {
 	
 	public String getColor (int f, int c) {
 		return matriz[f][c];
+	}
+	
+	public String getConfig () {
+		return "s";
 	}
 
 }

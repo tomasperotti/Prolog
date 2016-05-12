@@ -6,6 +6,9 @@ import java.awt.GridLayout;
 import javax.swing.JPanel;
 import java.awt.Color;
 import javax.swing.UIManager;
+
+import org.jpl7.Query;
+
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.SwingConstants;
@@ -125,6 +128,15 @@ public class Interfaz {
 			
 		}*/
 		Matriz matriz = new Matriz ();
+		
+		String t1 = "consult('4enlinea.pl')";
+		Query q1 = new Query(t1);
+
+		System.out.println( t1 + " " + (q1.hasSolution() ? "succeeded" : "failed") );
+		//String config = Matriz.getConfig();
+		
+		//String cuatro ="en([1,1],"+config, Res)";
+		
 		MouseAdapter OyenteFlecha = new MouseAdapter() {
 			
 			public void mouseClicked(MouseEvent arg0) {
