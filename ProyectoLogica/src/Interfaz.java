@@ -19,7 +19,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 public class Interfaz {
-
+	
+	
 	private JFrame frame;
 
 	/**
