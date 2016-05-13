@@ -173,6 +173,7 @@ public class Interfaz {
 							turnoColor.setText("TURNO ROJO");
 							matriz.imprimir();		
 							if( matriz.cuatroEnLinea("azul")) gameOver();
+							if( (matriz.getColor(6, 1)=="azul") ) System.out.println("AGUANTA DOGO");
 							i=0;
 
 						}
