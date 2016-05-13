@@ -3,6 +3,10 @@
 en([X, Y], [ [p(Z,W,R)|Rs] | Xs], Res) :- en([X,Y], [Rs|Xs], Res).
 en([X, Y], [ [p(Z,W,R)|[]] | Xs], Res) :- en([X,Y], Xs, Res).
 en([X,Y], [ [p(X,Y,R)| Rs] | Xs], R).
+% prueba BORRAR
+
+pasar([],[]).
+pasar([X|Ys], [X|Zs]) :- pasar(Ys, Zs).
 
 % conf = [[p(4,1,a), p(4,2,a), p(4,3,a), p(4,4,a)],[p(3,1,a), p(3,2,a), p(3,3,a), p(3,4,a)],[p(2,1,a), p(2,2,a), p(2,3,a), p(2,4,a)],[p(1,1,a), p(1,2,a), p(1,3,a), p(1,4,a)]]
 % cuatro en linea(+Color, +Conf, -CuatroEnLinea) 

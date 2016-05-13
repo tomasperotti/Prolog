@@ -129,13 +129,14 @@ public class Interfaz {
 		}*/
 		Matriz matriz = new Matriz ();
 		
+		//PRUEBO SI FUNCIONA
 		String t1 = "consult('4enlinea.pl')";
 		Query q1 = new Query(t1);
-
 		System.out.println( t1 + " " + (q1.hasSolution() ? "succeeded" : "failed") );
-		//String config = Matriz.getConfig();
 		
-		//String cuatro ="en([1,1],"+config, Res)";
+		//OBTENGO EL STRING DE CONFIGURACION
+		
+		
 		
 		MouseAdapter OyenteFlecha = new MouseAdapter() {
 			
@@ -144,6 +145,8 @@ public class Interfaz {
 				JLabel flecha = (JLabel) arg0.getSource();
 				String numFlecha = flecha.getText();
 				Integer leed = Integer.parseInt(numFlecha);
+				String cuatro ="cuatro(azul,"+matriz.getConfig()+",Res)";
+				Query q2 = new Query(cuatro);
 				
 				if(turnoColor.getText()=="TURNO AZUL") {
 					
@@ -152,7 +155,10 @@ public class Interfaz {
 							etiquetas[i][leed].setIcon(new ImageIcon(Interfaz.class.getResource("/images/azul.png")));
 							matriz.setColor(i, leed, "azul");
 							turnoColor.setText("TURNO ROJO");
+							System.out.println(( "La solucion es: "+ q2.oneSolution().get("Res")));
+									
 							i=0;
+							
 						}	
 					}
 

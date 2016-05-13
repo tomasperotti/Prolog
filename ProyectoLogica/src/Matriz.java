@@ -28,7 +28,7 @@ public class Matriz {
 	}
 	
 	public String getConfig () {
-		return "s";
+		return "[[p(4,1,azul), p(4,2,azul), p(4,3,azul), p(4,4,azul)],[p(3,1,a), p(3,2,r), p(3,3,r), p(3,4,r)],[p(2,1,a), p(2,2,r), p(2,3,a), p(2,4,a)],[p(1,1,r), p(1,2,a), p(1,3,a), p(1,4,a)]]";
 	}
 
 }
