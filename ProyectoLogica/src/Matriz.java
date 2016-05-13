@@ -1,4 +1,4 @@
-
+import org.jpl7.Query;
 
 public class Matriz {
 
@@ -12,7 +12,7 @@ public class Matriz {
 			
 			for(int j=1; j < 8; j++) {
 			
-				matriz[i][j] ="negro";
+				matriz[i][j] ="vacio";
 						
 			}
 		}
@@ -20,7 +20,15 @@ public class Matriz {
 	}
 	
 	public void setColor (int f, int c, String s ) {
-		matriz[f][c] =s;
+		
+		String disponible="disponible(["+f+","+c+"],"+getConfig()+")";
+		//NO SE DEBERIA NECESITAR String colocar_ficha="colocar_ficha("+s+",["+f+","+c+"],"+getConfig()+"Res)";
+		Query q1 = new Query(disponible);
+		boolean estaDisponible = q1.hasSolution();
+		System.out.println((estaDisponible ? "TRUE" : "FALSE"));
+		if (estaDisponible) {
+			matriz[f][c] =s;
+		}
 	}
 	
 	public String getColor (int f, int c) {
@@ -28,7 +36,36 @@ public class Matriz {
 	}
 	
 	public String getConfig () {
-		return "[[p(4,1,azul), p(4,2,azul), p(4,3,azul), p(4,4,azul)],[p(3,1,a), p(3,2,r), p(3,3,r), p(3,4,r)],[p(2,1,a), p(2,2,r), p(2,3,a), p(2,4,a)],[p(1,1,r), p(1,2,a), p(1,3,a), p(1,4,a)]]";
+		
+		String salida="";
+		
+		for (int i=1; i < 7; i++) {
+			
+			for (int j= 1; j < 8 ; j++ ) {
+				
+				
+				if (j==7 && i==6)
+					salida=salida+"p("+i+","+j+","+matriz[i][j]+")]]";
+				else
+					if (j==7) 
+						salida=salida+"p("+i+","+j+","+matriz[i][j]+")]";
+				else 
+					if(j==1 && i==1)
+						salida = salida+"[[p("+i+","+j+","+matriz[i][j]+"),";
+				else 
+					if (j==1)
+						salida = salida+",[p("+i+","+j+","+matriz[i][j]+"),";
+					else
+						salida=salida+"p("+i+","+j+","+matriz[i][j]+"),";
+			}
+				
+		}
+		
+		return salida;	
+	}
+	
+	public void imprimir() {
+		System.out.println(getConfig());
 	}
 
 }

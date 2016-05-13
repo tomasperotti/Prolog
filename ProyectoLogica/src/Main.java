@@ -17,7 +17,7 @@ public class Main {
 			String con1 ="pasar([1,2,3,4],Zs)";
 			Query q2 = new Query(con1);
 			
-			//System.out.println("La lista es: "+q2.oneSolution().get("Zs"));
+			System.out.println("La lista es: "+q2.oneSolution().get("Zs"));
 			
 			/*HashMap h = (HashMap) q2.oneSolution();
 			Term sol = (Term) h.get("Zs");
@@ -25,12 +25,14 @@ public class Main {
 			System.out.println(solutionTerms.toString());
 			*/
 			
-			while (q2.hasMoreSolutions()) {
-	            HashMap h = (HashMap) q2.nextSolution();
+			
+	            /*HashMap<Term, Term> h = (HashMap) q2.oneSolution();
 	            Term sol = (Term) h.get("Zs");
 	            Term[] solutionTerms = sol.toTermArray();
-	            System.out.println(solutionTerms.toString());
-			}
+	            for (Term term : solutionTerms) {
+	                System.out.println(term.arg(1).intValue());
+	            }
+				*/
 		
 			
 			System.out.println(conexion+" "+ (q2.hasSolution() ? "ACEPTADO" : "FALSO"));

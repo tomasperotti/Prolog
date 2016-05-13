@@ -3,6 +3,7 @@
 en([X, Y], [ [p(Z,W,R)|Rs] | Xs], Res) :- en([X,Y], [Rs|Xs], Res).
 en([X, Y], [ [p(Z,W,R)|[]] | Xs], Res) :- en([X,Y], Xs, Res).
 en([X,Y], [ [p(X,Y,R)| Rs] | Xs], R).
+
 % prueba BORRAR
 
 pasar([],[]).
@@ -87,9 +88,9 @@ obtAux( [W|Ws], [X| Xs], W).
 
 
 
-%cuatro_en_linea(C, [ p(Z,W,C) | Xs], R) :- 
+% disponible(Ranura)
 
-disponible(Ranura, Conf) :- en(Ranura, Conf, Contenido), Contenido = v.
+disponible(Ranura, Conf) :- en(Ranura, Conf, Contenido), Contenido = vacio.
 
 % colocar ficha(+Color, +Ranura, +Conf, -ConfRes), G2130
 
