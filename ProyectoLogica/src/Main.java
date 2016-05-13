@@ -17,13 +17,21 @@ public class Main {
 			String con1 ="pasar([1,2,3,4],Zs)";
 			Query q2 = new Query(con1);
 			
-			System.out.println("La lista es: "+q2.oneSolution().get("Zs"));
+			//System.out.println("La lista es: "+q2.oneSolution().get("Zs"));
+			
+			/*HashMap h = (HashMap) q2.oneSolution();
+			Term sol = (Term) h.get("Zs");
+			Term[] solutionTerms = sol.toTermArray();
+			System.out.println(solutionTerms.toString());
+			*/
 			
 			while (q2.hasMoreSolutions()) {
 	            HashMap h = (HashMap) q2.nextSolution();
-	            Term sol = (Term) h.get("ConfRes");
+	            Term sol = (Term) h.get("Zs");
 	            Term[] solutionTerms = sol.toTermArray();
+	            System.out.println(solutionTerms.toString());
 			}
+		
 			
 			System.out.println(conexion+" "+ (q2.hasSolution() ? "ACEPTADO" : "FALSO"));
 			

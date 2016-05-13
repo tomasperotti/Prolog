@@ -94,8 +94,10 @@ disponible(Ranura, Conf) :- en(Ranura, Conf, Contenido), Contenido = v.
 % colocar ficha(+Color, +Ranura, +Conf, -ConfRes), G2130
 
 colocar_ficha(Color, [X, Y] ,[], []).
-colocar_ficha(Color, [X, Y] , [ p(X, Y, C) | Xs ], [ p(X,Y,Color) | Zs ]) :- colocar_ficha(Color, [X,Y], Xs, Zs).
-colocar_ficha(Color, [X, Y] , [ p(Z, W, C) | Xs ], [ p(Z,W,C) | Zs ]) :- colocar_ficha(Color, [X,Y], Xs, Zs).
+colocar_ficha(Color, [X, Y] , [ [p(X, Y, vacio)|[]] | Xs ], [ p(X,Y,Color) | Zs ]) :- colocar_ficha(Color, [X,Y], Xs, Zs).
+colocar_ficha(Color, [X, Y] , [ [p(Z, W, C)|[]] | Xs ], [ p(Z,W,C) | Zs ]) :- colocar_ficha(Color, [X,Y], Xs, Zs).
+colocar_ficha(Color, [X, Y] , [ [p(X, Y, vacio)|Ys] | Xs ], [ p(X,Y,Color) | Zs ]) :- colocar_ficha(Color, [X,Y], [Ys|Xs], Zs).
+colocar_ficha(Color, [X, Y] , [ [p(Z, W, C)|Ys] | Xs ], [ p(Z,W,C) | Zs ]) :- colocar_ficha(Color, [X,Y], [Ys|Xs], Zs).
 
 % jugada maquina(+Color, +Conf, -Ranura)
 

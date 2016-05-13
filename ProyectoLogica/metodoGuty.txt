@@ -1,0 +1,35 @@
+/**
+     * Coloca la ficha de color c en la ranura r siempre y cuando esta ultima este disponible.
+     * Realiza una consulta a prolog acerca de la logica a seguir.
+     * Devuelve la Conf resultante
+     * @param c Color de la ficha a insertar en la ranura r
+     * @param r Ranura donde insertar la ficha de color c
+     * @return Configuracion resultante de insertar la ficha de color c en la ranura r
+     */
+    public Conf colocarFicha(Color c, Ranura r) {
+        
+        if (tableroLleno()){
+            return null;
+        }
+        
+        System.out.println("Se quiere colocar color " + c + " en ranura " + r);
+        String t = "colocar_ficha(" + c + ", " + r + ", " + conf + ", ConfRes)";
+        Query q = new Query(t);
+        
+        if (!q.hasSolution()){
+            System.out.println("No hay conf nueva para colocar ficha");
+            return null;
+        }
+        while (q.hasMoreSolutions()) {
+            HashMap h = (HashMap) q.nextSolution();
+            Term sol = (Term) h.get("ConfRes");
+            Term[] solutionTerms = sol.toTermArray();
+            Conf toReturn = new Conf();
+            for (Term term : solutionTerms) {
+                toReturn.insertarEnCelda(term.arg(1).intValue(), term.arg(2).intValue(), term.arg(3).name());
+            }
+            conf = toReturn;
+        }
+        return conf;
+    }
+
