@@ -185,7 +185,7 @@ public class Interfaz {
 							etiquetas[i][col].setIcon(new ImageIcon(Interfaz.class.getResource("/images/rojo.png")));
 							turnoColor.setText("TURNO AZUL");
 							matriz.imprimir();		
-							if( matriz.cuatroEnLinea("azul")) gameOver();
+							if( matriz.cuatroEnLinea("rojo")) gameOver();
 							i=0;
 
 						}
