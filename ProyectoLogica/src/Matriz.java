@@ -75,17 +75,14 @@ public class Matriz {
 		
 		String en ="en(["+f+","+c+"],"+getConfig()+",Res)";
 		Query q1 = new Query(en);
-		System.out.println(""+en+ (q1.hasSolution() ? "TIENE" : "NO TIENE"));
-		System.out.println();
 		String solucion = q1.oneSolution().get("Res").toString();
-		System.out.println(solucion);
-		System.out.println("HOLA");
-		if (solucion == "azul") System.out.println("He leido un azul");
-		else System.out.println("No es azul.");
-		
+				
 		return solucion;
 	}
-	
+	/**
+	 * Método que retorna la configuración del tablero.
+	 * @return la configuración del tablero.
+	 */
 	public String getConfig () {
 		
 		String salida="";
@@ -114,7 +111,9 @@ public class Matriz {
 		
 		return salida;	
 	}
-	
+	/**
+	 * Método que imprime por consola la configuración del tablero.
+	 */
 	public void imprimir() {
 		System.out.println(getConfig());
 	}

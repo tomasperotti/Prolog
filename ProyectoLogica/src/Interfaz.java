@@ -20,7 +20,11 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-
+/**
+ * Clase utilizada para representar la Interfaz del juego.
+ * @author Tomás Perotti - Christian Bancalá
+ *
+ */
 public class Interfaz {
 	
 	
@@ -29,7 +33,7 @@ public class Interfaz {
 	private JLabel [] flechas = new JLabel [8];
 
 	/**
-	 * Launch the application.
+	 * Ejecuta la aplicación.
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -45,14 +49,14 @@ public class Interfaz {
 	}
 
 	/**
-	 * Create the application.
+	 * Crea la aplicación.
 	 */
 	public Interfaz() {
 		initialize();
 	}
 
 	/**
-	 * Initialize the contents of the frame.
+	 * Inicializa los contenidos del frame.
 	 */
 	private void initialize() {
 		frame = new JFrame();
@@ -139,22 +143,12 @@ public class Interfaz {
 		panel.add(panel_2);
 		panel_2.setLayout(new GridLayout(7, 7, 0, 0));
 		
-		
-		
-		/*class OyenteFlecha () implements MouseListener  {
-			
-			
-		}*/
 		Matriz matriz = new Matriz ();
 		
 		//PRUEBO SI FUNCIONA
 		String t1 = "consult('4enlinea.pl')";
 		Query q1 = new Query(t1);
 		System.out.println( t1 + " " + (q1.hasSolution() ? "succeeded" : "failed") );
-		
-		//OBTENGO EL STRING DE CONFIGURACION
-		
-		
 		
 		MouseAdapter OyenteFlecha = new MouseAdapter() {
 			
@@ -173,7 +167,6 @@ public class Interfaz {
 							turnoColor.setText("TURNO ROJO");
 							matriz.imprimir();		
 							if( matriz.cuatroEnLinea("azul")) gameOver();
-							if( (matriz.getColor(6, 1)=="azul") ) System.out.println("AGUANTA DOGO");
 							i=0;
 
 						}
@@ -228,7 +221,9 @@ public class Interfaz {
 		}
 		
 	}
-	
+	/**
+	 * Método que termina la ejecución del juego.
+	 */
 	public void gameOver () {
 		
 		//SE PODRIAN PINTAR LOS 4 ELEMENTOS DE LA LISTA QUE DEVUELVE PROLOG 

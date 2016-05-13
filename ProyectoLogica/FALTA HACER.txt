@@ -7,7 +7,7 @@ JAVA:
 
 *Poder interpretar las listas que retorna prolog para utilizarlas
 *Conectar la inteligencia con el Frame, (solo se puede jugar 1 vs 1).
-*Conectar colocar_ficha
+*Conectar colocar_ficha (es necesario interpretar listas).
 
 DOCUMENTACION
 *Toda entera
