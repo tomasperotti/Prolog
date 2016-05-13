@@ -19,18 +19,30 @@ public class Matriz {
 	
 	}
 	
-	public void setColor (int f, int c, String s ) {
-		
+	public boolean estaDisponible (int f, int c) {
 		String disponible="disponible(["+f+","+c+"],"+getConfig()+")";
-		//NO SE DEBERIA NECESITAR String colocar_ficha="colocar_ficha("+s+",["+f+","+c+"],"+getConfig()+"Res)";
 		Query q1 = new Query(disponible);
-		boolean estaDisponible = q1.hasSolution();
-		System.out.println((estaDisponible ? "TRUE" : "FALSE"));
+		return q1.hasSolution();
+	}
+	
+	public boolean setColor (int f, int c, String s ) {
+		
+		//PARA UNA MAYOR CONEXION CON PROLOG SE DEBERIA: String colocar_ficha="colocar_ficha("+s+",["+f+","+c+"],"+getConfig()+"Res)
+		
+		boolean estaDisponible = estaDisponible(f,c);
 		if (estaDisponible) {
 			matriz[f][c] =s;
 		}
+		return estaDisponible;
 	}
 	
+	public boolean cuatroEnLinea(String color) {
+		
+		String cuatro ="cuatro("+color+","+getConfig()+",Res)";
+		Query q1 = new Query(cuatro);
+		boolean hayCuatro = q1.hasSolution();
+		return hayCuatro;
+	}
 	public String getColor (int f, int c) {
 		return matriz[f][c];
 	}

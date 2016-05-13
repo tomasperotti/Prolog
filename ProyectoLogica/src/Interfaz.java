@@ -1,4 +1,5 @@
 import java.awt.EventQueue;
+import java.awt.*;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -10,6 +11,8 @@ import javax.swing.UIManager;
 import org.jpl7.Query;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.SwingConstants;
 import javax.swing.JButton;
@@ -159,38 +162,39 @@ public class Interfaz {
 				
 				JLabel flecha = (JLabel) arg0.getSource();
 				String numFlecha = flecha.getText();
-				Integer leed = Integer.parseInt(numFlecha);
-				//String cuatro ="cuatro(azul,"+matriz.getConfig()+",Res)";
-				//Query q2 = new Query(cuatro);
+				Integer col = Integer.parseInt(numFlecha);
 				
 				if(turnoColor.getText()=="TURNO AZUL") {
 					
 					for (int i=6; i>0; i--) {
-						if (matriz.getColor(i, leed) == "vacio") {
-							etiquetas[i][leed].setIcon(new ImageIcon(Interfaz.class.getResource("/images/azul.png")));
-							matriz.setColor(i, leed, "azul");
+						
+						if (matriz.setColor(i, col, "azul")) {
+							etiquetas[i][col].setIcon(new ImageIcon(Interfaz.class.getResource("/images/azul.png")));
 							turnoColor.setText("TURNO ROJO");
-							//System.out.println(( "La solucion es: "+ q2.oneSolution().get("Res")));
 							matriz.imprimir();		
+							if( matriz.cuatroEnLinea("azul")) gameOver();
 							i=0;
-							
-						}	
+
+						}
+		
 					}
 
 				} else {
 					for (int i=6; i>0; i--) {
-						if (matriz.getColor(i, leed) == "vacio") {
-							etiquetas[i][leed].setIcon(new ImageIcon(Interfaz.class.getResource("/images/rojo.png")));
-							matriz.setColor(i, leed, "rojo");
+						if (matriz.setColor(i, col, "rojo")) {
+							etiquetas[i][col].setIcon(new ImageIcon(Interfaz.class.getResource("/images/rojo.png")));
 							turnoColor.setText("TURNO AZUL");
 							matriz.imprimir();		
+							if( matriz.cuatroEnLinea("azul")) gameOver();
 							i=0;
-						}	
+
+						}
 					}
 				}
 			}
 		
 		};
+		
 		for (int i=1; i < 8 ; i++){
 			
 			flechas[i] = new JLabel (""+i);
@@ -201,26 +205,32 @@ public class Interfaz {
 			panel_2.add(flechas[i]);
 			
 		}
+		
 		int f = 1;
 		int c = 1;
+		
 		for (int i=1; i < 7 ; i++){
 			
 			for(int j=1; j < 8; j++) {
 			
-			etiquetas[i][j] = new JLabel ("("+c+","+f+")");
-			etiquetas[i][j].setIcon(new ImageIcon(Interfaz.class.getResource("/images/negro.png")));
-			panel_2.add(etiquetas[i][j]);
+				etiquetas[i][j] = new JLabel ("("+c+","+f+")");
+				etiquetas[i][j].setIcon(new ImageIcon(Interfaz.class.getResource("/images/negro.png")));
+				panel_2.add(etiquetas[i][j]);
 			
-			f++;
-			if ( f == 8) {
-				f=1;
-				c++;
-			}
+				f++;
+				if ( f == 8) {
+					f=1;
+					c++;
+				}
 			
 			}
 		}
 		
-		
-		
+	}
+	
+	public void gameOver () {
+		JOptionPane.showMessageDialog (null, "CUATRO EN LINEA !!! ", "Ganaste", JOptionPane.INFORMATION_MESSAGE);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.dispose();
 	}
 }
