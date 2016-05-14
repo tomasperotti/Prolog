@@ -9,15 +9,11 @@ en([X,Y], [ [p(X,Y,R)| Rs] | Xs], R).
 % cuatro en linea(+Color, +Conf, -CuatroEnLinea) 
 
 cuatro(Color, Conf, Resultado):- 
-<<<<<<< HEAD
+
  cuatroAux(Color, Conf, 0, Aux), longitud(Aux,0,Long), mostrar4(Aux, Resultado,Long);
  trans(Conf, Traspuesta), cuatroH(Color, Traspuesta, 0, Aux), longitud(Aux,0,Long), mostrar4(Aux, Resultado,Long);
  ced(Color,Conf,Aux),longitud(Aux,0,Long),mostrar4(Aux,Resultado,Long).
-=======
-	cuatroAux(Color, Conf, 0, Aux), longitud(Aux,0,Long), mostrar4(Aux, Resultado,Long);
-	trans(Conf, Traspuesta), cuatroH(Color, Traspuesta, 0, Aux), longitud(Aux,0,Long), mostrar4(Aux, Resultado,Long);
-	ced(Color,Conf,Resultado).
->>>>>>> branch 'master' of https://github.com/tomasperotti/Prolog.git
+
 	
 cuatroAux(Color, Conf, Contador, Resultado):- cuatroH(Color, Conf, Contador, Resultado).
 
