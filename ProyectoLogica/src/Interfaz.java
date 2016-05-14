@@ -27,6 +27,7 @@ import java.awt.event.ActionEvent;
  */
 public class Interfaz {
 	
+	private JLabel turnoColor = new JLabel();
 	private Matriz matriz = new Matriz ();
 	private JFrame frame;
 	private JLabel [][] etiquetas = new JLabel [7][8];
@@ -83,7 +84,6 @@ public class Interfaz {
 		panel.add(panelSuperior);
 		panelSuperior.setLayout(null);
 		 
-		JLabel turnoColor = new JLabel();
 		turnoColor.setBounds(605, 10, 50, 50);
 		panelSuperior.add(turnoColor);
 		
@@ -149,9 +149,6 @@ public class Interfaz {
 		panel.add(panelInferior);
 		panelInferior.setLayout(new GridLayout(7, 7, 0, 0));
 		
-
-		
-		//PRUEBO SI FUNCIONA
 		String t1 = "consult('4enlinea.pl')";
 		Query q1 = new Query(t1);
 		System.out.println( t1 + " " + (q1.hasSolution() ? "succeeded" : "failed") );
@@ -171,9 +168,10 @@ public class Interfaz {
 							etiquetas[i][col].setIcon(new ImageIcon(Interfaz.class.getResource("/images/azul.png")));
 							turnoColor.setIcon(new ImageIcon(Interfaz.class.getResource("/images/rojo.gif")));
 							turnoColor.setName("TURNO ROJO");
-							if( matriz.cuatroEnLinea("a", resultado)) gameOver(resultado);
-						    p pos = matriz.jugadaMaquina("r");
-							cambiarColor(pos.getX(),pos.getY(),pos.getC());
+							if( matriz.cuatroEnLinea("a", resultado)) 
+								gameOver(resultado,"azul");
+						    /*p pos = matriz.jugadaMaquina("r");
+							cambiarColor(pos.getX(),pos.getY(),pos.getC());*/
 							i=0;
 						}
 					}
@@ -184,13 +182,12 @@ public class Interfaz {
 							turnoColor.setIcon(new ImageIcon(Interfaz.class.getResource("/images/azul.gif")));
 							turnoColor.setName("TURNO AZUL");
 							if( matriz.cuatroEnLinea("r", resultado)) 
-								gameOver(resultado);
+								gameOver(resultado,"rojo");
 							i=0;
 						}
 					}
 				}
 			}
-		
 		};
 		
 		for (int i=1; i < 8 ; i++){
@@ -202,16 +199,13 @@ public class Interfaz {
 			flechas[i].setVisible(false);
 			
 			panelInferior.add(flechas[i]);
-			
 		}
 		
 		int f = 1;
 		int c = 1;
 		
 		for (int i=1; i < 7 ; i++){
-			
 			for(int j=1; j < 8; j++) {
-			
 				etiquetas[i][j] = new JLabel();
 				etiquetas[i][j].setName("("+c+","+f+")");
 				etiquetas[i][j].setIcon(new ImageIcon(Interfaz.class.getResource("/images/negro.png")));
@@ -222,32 +216,39 @@ public class Interfaz {
 					f=1;
 					c++;
 				}
-			
 			}
 		}
-		
 	}
-	
-	private boolean cambiarColor (int x, int y, Character c){
-		boolean toReturn = false;
-		
+	/**
+	 * Realiza el cambio de color cuando la maquina realiza su jugada en las coordenadas mencionadas 
+	 * @param x coordenada
+	 * @param y coordenada
+	 * @param c color
+	 */
+	private void cambiarColor (int x, int y, Character c){
 		if(c == 'r')
 			etiquetas[x][y].setIcon(new ImageIcon(Interfaz.class.getResource("/images/rojo.png")));
+			turnoColor.setName("TURNO AZUL");
+			turnoColor.setIcon(new ImageIcon(Interfaz.class.getResource("/images/azul.gif")));
+
+
 		if(c == 'a')
 			etiquetas[x][y].setIcon(new ImageIcon(Interfaz.class.getResource("/images/azul.png")));
-		
-		return toReturn;
+			turnoColor.setName("TURNO ROJO");
+			turnoColor.setIcon(new ImageIcon(Interfaz.class.getResource("/images/rojo.gif")));
+
+
 	}
 	
 	/**
 	 * Método que termina la ejecución del juego.
 	 */
-	public void gameOver (List<p> resultado) {
+	public void gameOver (List<p> resultado, String color) {
 		
 		for (p pos : resultado){
 			etiquetas[pos.getX()][pos.getY()].setIcon(new ImageIcon(Interfaz.class.getResource("/images/color.png")));
 		}
-		JOptionPane.showMessageDialog (null, "CUATRO EN LINEA !!! ", "Ganaste", JOptionPane.INFORMATION_MESSAGE);
+		JOptionPane.showMessageDialog (null, "¡CUATRO EN LINEA!\nGanador: jugador "+color+"", "Final del juego", JOptionPane.INFORMATION_MESSAGE);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.dispose();
 	}

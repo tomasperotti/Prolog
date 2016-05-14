@@ -1,8 +1,17 @@
-
+/**
+ * Representa la posición de una ficha y su color
+ * @author Christian
+ *
+ */
 public class p {
 	private int x,y;
 	private Character c;
-	
+	/**
+	 * 
+	 * @param x coordenada 
+	 * @param y coordenada
+	 * @param c color
+	 */
 	public p(int x, int y,Character c){
 		this.x = x;
 		this.y = y;

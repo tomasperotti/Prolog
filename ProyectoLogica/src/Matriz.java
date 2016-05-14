@@ -124,6 +124,11 @@ public class Matriz {
 		System.out.println(getConfig());
 	}
 	
+	/**
+	 * Jugada de la maquina luego del turno del usuario
+	 * @param color Color correspondiente a la maquina
+	 * @return
+	 */
 	public p jugadaMaquina(String color) {
 		p pos = new p(0,0,color.charAt(0));
 		String maq ="jugada_maquina("+color+",[[p(6,1,a),p(6,2,a),p(6,3,v),p(6,4,a),p(6,5,v),p(6,6,v),p(6,7,v)],[p(5,1,v),p(5,2,a),p(5,3,a),p(5,4,v),p(5,5,v),p(5,6,v),p(5,7,v)],[p(4,1,a),p(4,2,a),p(4,3,v),p(4,4,v),p(4,5,v),p(4,6,v),p(4,7,v)],[p(3,1,a),p(3,2,a),p(3,3,r),p(3,4,r),p(3,5,a),p(3,6,v),p(3,7,v)],[p(2,1,a),p(2,2,v),p(2,3,a),p(2,4,r),p(2,5,v),p(2,6,v),p(2,7,v)],[p(1,1,v),p(1,2,v),p(1,3,a),p(1,4,a),p(1,5,v),p(1,6,v),p(1,7,v)]],Ranura)";
@@ -139,6 +144,12 @@ public class Matriz {
 		return pos;
 	}
 	
+	/**
+	 * Analiza el resultado que brinda Prolog al momento de invocar jugadaMaquina
+	 * @param sol Resultado a analizar
+	 * @param pos Posicion resultante representada por la clase p (Debe setearse su color previamente desde el método que lo invoca)
+	 * @return Retorna true en caso de encontrar una posicion en el String y false en caso contrario
+	 */
 	private boolean obtenerRanura (String sol, p pos){
 		int l = sol.length();
 		boolean x = false;
@@ -160,6 +171,11 @@ public class Matriz {
 		
 	}
 	
+	/**
+	 * Analiza una solución brindada por Prolog para hallar todas las posiciones que contiene
+	 * @param sol Listado de posiciones a analizar
+	 * @param resultado Lista con las posiciones encontradas, representadas mediante la clase p
+	 */
 	private void listaPosiciones(String sol, List<p> resultado){
 		int l = sol.length();
     	int j = 0;
@@ -175,7 +191,13 @@ public class Matriz {
     	 }
 		
 	}
-
+	
+	/**
+	 * Agrega a una lista pasada por parámetro la posición encontrada en el String aux
+	 * @param aux String a analizar en busca de una posición
+	 * @param list Lista donde se insertará la posición encontrada
+	 * @return verdadero en caso de que haya encontrado una posición, false en caso contrario
+	 */
 	private boolean procesarSubString (String aux, List<p> list){
 		int x, y;
 		x = 0;
