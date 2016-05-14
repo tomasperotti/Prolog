@@ -30,14 +30,14 @@ ced(Color,[Lista | [ Lista2 | Lista3 ] ],Resultado):-
 	cedRecorrerFila(Color,Lista3,4,Resultado).
 
 cedRecorrerFila(Color,[PrimeraFila | RestoFilas],X,Res):- 
-	cedFila(0,Color,PrimeraFila,X,1,RestoFilas),write("entro uno"),generar(0,Color,X,1,Res);
-	cedFila(0,Color,PrimeraFila,X,2,RestoFilas),write("entro dos"),generar(0,Color,X,2,Res);
-	cedFila(0,Color,PrimeraFila,X,3,RestoFilas),write("entro tres"),generar(0,Color,X,3,Res);
-	cedFila(0,Color,PrimeraFila,X,4,RestoFilas),write("entro cuatro"),generar(0,Color,X,4,Res);
-	cedFilaD(0,Color,PrimeraFila,X,4,RestoFilas),write("entro uno"),generarD(0,Color,X,4,Res);
-	cedFilaD(0,Color,PrimeraFila,X,5,RestoFilas),write("entro dos"),generarD(0,Color,X,5,Res);
-	cedFilaD(0,Color,PrimeraFila,X,6,RestoFilas),write("entro seis seis"),generarD(0,Color,X,6,Res);
-	cedFilaD(0,Color,PrimeraFila,X,7,RestoFilas),write("entro cuatro"),generarD(0,Color,X,7,Res).
+	cedFila(0,Color,PrimeraFila,X,1,RestoFilas),generar(0,Color,X,1,Res);
+	cedFila(0,Color,PrimeraFila,X,2,RestoFilas),generar(0,Color,X,2,Res);
+	cedFila(0,Color,PrimeraFila,X,3,RestoFilas),generar(0,Color,X,3,Res);
+	cedFila(0,Color,PrimeraFila,X,4,RestoFilas),generar(0,Color,X,4,Res);
+	cedFilaD(0,Color,PrimeraFila,X,4,RestoFilas),generarD(0,Color,X,4,Res);
+	cedFilaD(0,Color,PrimeraFila,X,5,RestoFilas),generarD(0,Color,X,5,Res);
+	cedFilaD(0,Color,PrimeraFila,X,6,RestoFilas),generarD(0,Color,X,6,Res);
+	cedFilaD(0,Color,PrimeraFila,X,7,RestoFilas),generarD(0,Color,X,7,Res).
 
 % Diagonal ID
 

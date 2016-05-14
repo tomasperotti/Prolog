@@ -63,7 +63,7 @@ public class Interfaz {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 729, 442);
+		frame.setBounds(50, 50, 720, 443);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(new GridLayout(1, 0, 0, 0));
 		
@@ -107,7 +107,7 @@ public class Interfaz {
 		botonAzul.setBounds(21, 21, 89, 23);
 		panel_3.add(botonAzul);
 		
-		JLabel lblCuatroEnLinea = new JLabel("CUATRO EN LINEA ");
+		JLabel lblCuatroEnLinea = new JLabel("CUATRO EN LINEA");
 		lblCuatroEnLinea.setBounds(269, 5, 269, 38);
 		panel_3.add(lblCuatroEnLinea);
 		lblCuatroEnLinea.setFont(new Font("Tahoma", Font.PLAIN, 31));
