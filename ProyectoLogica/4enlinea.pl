@@ -12,7 +12,7 @@ cuatro(Color, Conf, Resultado):-
 	cuatroAux(Color, Conf, 0, Aux), longitud(Aux,0,Long), mostrar4(Aux, Resultado,Long);
 	trans(Conf, Traspuesta), cuatroH(Color, Traspuesta, 0, Resultado), longitud(Aux,0,Long), mostrar4(Aux, Resultado,Long);
 	ced(Color,Conf,Resultado).
-
+	
 cuatroAux(Color, Conf, Contador, Resultado):- cuatroH(Color, Conf, Contador, Resultado).
 
 %Cuatro Horizontal (utilizado para vertical)
@@ -22,7 +22,7 @@ cuatroH(Color, Conf, 4, []).
 cuatroH(Color, [[p(X,Y,Color)|Xs]|Ys], Contador, [p(X,Y,Color)|Resultado]):- Contador1 is Contador+1, cuatroH(Color, [Xs|Ys], Contador1, Resultado).
 cuatroH(Color, [[p(X,Y,R)|Xs]|Ys], Contador, Resultado):- cuatroH(Color, [Xs|Ys], 0, Resultado).
 
-%Cuatro diagonal
+%Cuatro diagonal ID
 
 ced(Color,[Lista | [ Lista2 | Lista3 ] ],Resultado):- 
 	cedRecorrerFila(Color,[Lista | [Lista2 | Lista3]],6,Resultado);
@@ -30,16 +30,38 @@ ced(Color,[Lista | [ Lista2 | Lista3 ] ],Resultado):-
 	cedRecorrerFila(Color,Lista3,4,Resultado).
 
 cedRecorrerFila(Color,[PrimeraFila | RestoFilas],X,Res):- 
-	cedFila(0,Color,PrimeraFila,X,1,RestoFilas),generar(0,Color,X,1,Res);
-	cedFila(0,Color,PrimeraFila,X,2,RestoFilas),generar(0,Color,X,2,Res);
-	cedFila(0,Color,PrimeraFila,X,3,RestoFilas),generar(0,Color,X,3,Res);
-	cedFila(0,Color,PrimeraFila,X,4,RestoFilas),write("entro cuatro"),generar(0,Color,X,4,Res).
+	cedFila(0,Color,PrimeraFila,X,1,RestoFilas),write("entro uno"),generar(0,Color,X,1,Res);
+	cedFila(0,Color,PrimeraFila,X,2,RestoFilas),write("entro dos"),generar(0,Color,X,2,Res);
+	cedFila(0,Color,PrimeraFila,X,3,RestoFilas),write("entro tres"),generar(0,Color,X,3,Res);
+	cedFila(0,Color,PrimeraFila,X,4,RestoFilas),write("entro cuatro"),generar(0,Color,X,4,Res);
+	cedFilaD(0,Color,PrimeraFila,X,4,RestoFilas),write("entro uno"),generarD(0,Color,X,4,Res);
+	cedFilaD(0,Color,PrimeraFila,X,5,RestoFilas),write("entro dos"),generarD(0,Color,X,5,Res);
+	cedFilaD(0,Color,PrimeraFila,X,6,RestoFilas),write("entro seis seis"),generarD(0,Color,X,6,Res);
+	cedFilaD(0,Color,PrimeraFila,X,7,RestoFilas),write("entro cuatro"),generarD(0,Color,X,7,Res).
+
+% Diagonal ID
 
 cedFila(4,Color,Fila,PosActual,ColActual,FilasSiguientes).
-cedFila(Cont,Color, Fila, PosActual, ColActual, [ProxFila | FilasSiguientes]):- buscar(PosActual,ColActual,Fila,Color), Cont1 is Cont+1, Pos is PosActual+1, Col is ColActual+1,cedFila(Cont1,Color,ProxFila,Pos,Col,FilasSiguientes).
 
-% metodos auxiliares
+cedFila(Cont,Color, Fila, PosActual, ColActual, [ProxFila | FilasSiguientes]):- 
+	buscar(PosActual,ColActual,Fila,Color), Cont1 is Cont+1, Pos is PosActual-1, Col is ColActual+1,cedFila(Cont1,Color,ProxFila,Pos,Col,FilasSiguientes).
+cedFila(Cont,Color, Fila, PosActual, ColActual, []):- 
+	buscar(PosActual,ColActual,Fila,Color), Cont1 is Cont+1, Pos is PosActual-1, Col is ColActual+1,cedFila(Cont1,Color,ProxFila,Pos,Col,FilasSiguientes).
+	
+% Diagonal DI
+	
+cedFilaD(4,Color,Fila,PosActual,ColActual,FilasSiguientes).
 
+cedFilaD(Cont,Color, Fila, PosActual, ColActual, [ProxFila | FilasSiguientes]):- 
+	buscar(PosActual,ColActual,Fila,Color), Cont1 is Cont+1, Pos is PosActual-1, Col is ColActual-1,cedFilaD(Cont1,Color,ProxFila,Pos,Col,FilasSiguientes).
+cedFilaD(Cont,Color, Fila, PosActual, ColActual, []):- 
+	buscar(PosActual,ColActual,Fila,Color), Cont1 is Cont+1, Pos is PosActual-1, Col is ColActual-1,cedFilaD(Cont1,Color,ProxFila,Pos,Col,FilasSiguientes).
+
+% Metodos auxiliares
+
+generarD(4,Color,X,Y,Res).
+generarD(Cont,Color,X,Y,[p(X,Y,Color)| Res]):- Cont1 is Cont+1, X1 is X-1, Y1 is Y-1,generarD(Cont1,Color,X1,Y1,Res).
+	
 % Muestra los ultimos 4 elementos de una lista
 
 mostrar4([_|Xs], Zs, Cont):- Cont1 is Cont-1, mostrar4(Xs, Zs, Cont1).
@@ -50,8 +72,10 @@ buscar(X,Y,[p(X,Y,Color) | RestoFila],Color).
 buscar(X,Y,[p(W,Z,C) | RestoFila],Color):- buscar(X,Y,RestoFila,Color).
 
 %Genera una lista con la diagonal ganadora
+
 generar(4,Color,X,Y,Res).
-generar(Cont,Color,X,Y,[p(X,Y,Color)| Res):- Cont1 is Cont+1, X1 is X+1, Y1 is Y+1, generar(Cont1,Color,X1,Y1,Res).
+generar(Cont,Color,X,Y,[p(X,Y,Color)| Res]):- Cont1 is Cont+1, X1 is X-1, Y1 is Y+1,generar(Cont1,Color,X1,Y1,Res).
+
 
 % Obtiene la longitud de una lista.
 
