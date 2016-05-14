@@ -63,15 +63,16 @@ public class Interfaz {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(50, 50, 720, 443);
+		frame.setBounds(50, 50, 675, 442);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setMaximumSize(new Dimension(720,443));
-		frame.setMinimumSize(new Dimension(720,443));
+		frame.setMaximumSize(new Dimension(675,442));
+		frame.setMinimumSize(new Dimension(675,442));
+		frame.setResizable(false);
 		frame.setTitle("Cuatro en linea");
-//		frame.setIconImage(new ImageIcon());
-		frame.getContentPane().setLayout(new GridLayout(1, 0, 0, 0));
 		
-
+	    frame.setIconImage(new ImageIcon(Interfaz.class.getResource("/images/logo.png")).getImage());
+		
+		frame.getContentPane().setLayout(new GridLayout(1, 0, 0, 0));
 		
 		JPanel panel = new JPanel();
 		panel.setForeground(UIManager.getColor("Button.foreground"));
@@ -80,24 +81,29 @@ public class Interfaz {
 		panel.setLayout(null);
 		
 		JPanel panel_3 = new JPanel();
-		panel_3.setBounds(0, 0, 713, 67);
+		panel_3.setBounds(0, 0, 713, 100);
 		panel.add(panel_3);
 		panel_3.setLayout(null);
-		
-		JLabel turnoColor = new JLabel("TURNO AZUL");
-		turnoColor.setHorizontalAlignment(SwingConstants.CENTER);
-		turnoColor.setBounds(586, 25, 89, 19);
+		 
+		JLabel turnoColor = new JLabel();
+		turnoColor.setBounds(605, 25, 50, 50);
 		panel_3.add(turnoColor);
 		
+		//Botones comienzo de juego
+		JPanel panelBotonesInicio = new JPanel();
+		panelBotonesInicio.setBounds(0, 0, 100, 70);
+		panelBotonesInicio.setLayout(new GridLayout(2,1,0,0));
 		JButton botonRojo = new JButton("ROJO");
 		JButton botonAzul = new JButton("AZUL");
 		
 		botonAzul.setBackground(new Color(0, 0, 255));
 		botonAzul.setForeground(new Color(255, 255, 255));
+		
 		botonAzul.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
-				turnoColor.setText("TURNO AZUL");
+				turnoColor.setIcon(new ImageIcon(Interfaz.class.getResource("/images/azul.gif")));
+				turnoColor.setName("TURNO AZUL");
 				botonAzul.setVisible(false);
 				botonRojo.setVisible(false);
 				
@@ -110,20 +116,15 @@ public class Interfaz {
 			}
 		});
 	
-		botonAzul.setBounds(21, 21, 89, 23);
-		panel_3.add(botonAzul);
-		
-		JLabel lblCuatroEnLinea = new JLabel("CUATRO EN LINEA");
-		lblCuatroEnLinea.setBounds(269, 5, 269, 38);
-		panel_3.add(lblCuatroEnLinea);
-		lblCuatroEnLinea.setFont(new Font("Tahoma", Font.PLAIN, 31));
+		panelBotonesInicio.add(botonAzul);
 		
 		
 		botonRojo.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				
-				turnoColor.setText("TURNO ROJO");
+				turnoColor.setIcon(new ImageIcon(Interfaz.class.getResource("/images/rojo.gif")));
+				turnoColor.setName("TURNO ROJO");
 				botonRojo.setVisible(false);
 				botonAzul.setVisible(false);
 				
@@ -136,10 +137,14 @@ public class Interfaz {
 		});
 		botonRojo.setBackground(new Color(255, 0, 0));
 		botonRojo.setForeground(new Color(255, 255, 255));
-		botonRojo.setBounds(131, 21, 89, 23);
-		panel_3.add(botonRojo);
+		panelBotonesInicio.add(botonRojo);
+		panel_3.add(panelBotonesInicio);
 		
-		
+		JLabel lblCuatroEnLinea = new JLabel();
+		lblCuatroEnLinea.setIcon(new ImageIcon(Interfaz.class.getResource("/images/cel.png")));
+		lblCuatroEnLinea.setSize(400,60);
+		lblCuatroEnLinea.setBounds(153,0, 400, 60);
+		panel_3.add(lblCuatroEnLinea);
 		
 		JPanel panel_2 = new JPanel();
 		panel_2.addMouseListener(new MouseAdapter() {
@@ -164,16 +169,17 @@ public class Interfaz {
 			public void mouseClicked(MouseEvent arg0) {
 				
 				JLabel flecha = (JLabel) arg0.getSource();
-				String numFlecha = flecha.getText();
+				String numFlecha = flecha.getName();
 				Integer col = Integer.parseInt(numFlecha);
 				List<p> resultado = new LinkedList<p>();
-				if(turnoColor.getText()=="TURNO AZUL") {
+				if(turnoColor.getName().equals("TURNO AZUL")) {
 					
 					for (int i=6; i>0; i--) {
 						
 						if (matriz.setColor(i, col, "a")) {
 							etiquetas[i][col].setIcon(new ImageIcon(Interfaz.class.getResource("/images/azul.png")));
-							turnoColor.setText("TURNO ROJO");
+							turnoColor.setIcon(new ImageIcon(Interfaz.class.getResource("/images/rojo.gif")));
+							turnoColor.setName("TURNO ROJO");
 							matriz.imprimir();		
 							if( matriz.cuatroEnLinea("a", resultado)) gameOver(resultado);
 							i=0;
@@ -186,7 +192,8 @@ public class Interfaz {
 					for (int i=6; i>0; i--) {
 						if (matriz.setColor(i, col, "r")) {
 							etiquetas[i][col].setIcon(new ImageIcon(Interfaz.class.getResource("/images/rojo.png")));
-							turnoColor.setText("TURNO AZUL");
+							turnoColor.setIcon(new ImageIcon(Interfaz.class.getResource("/images/azul.gif")));
+							turnoColor.setName("TURNO AZUL");
 							matriz.imprimir();		
 							if( matriz.cuatroEnLinea("r", resultado)) 
 								gameOver(resultado);
@@ -201,7 +208,8 @@ public class Interfaz {
 		
 		for (int i=1; i < 8 ; i++){
 			
-			flechas[i] = new JLabel (""+i);
+			flechas[i] = new JLabel();
+			flechas[i].setName(""+i);
 			flechas[i].setIcon(new ImageIcon(Interfaz.class.getResource("/images/flecha.png")) );
 			flechas[i].addMouseListener (OyenteFlecha);
 			flechas[i].setVisible(false);
@@ -217,7 +225,8 @@ public class Interfaz {
 			
 			for(int j=1; j < 8; j++) {
 			
-				etiquetas[i][j] = new JLabel ("("+c+","+f+")");
+				etiquetas[i][j] = new JLabel();
+				etiquetas[i][j].setName("("+c+","+f+")");
 				etiquetas[i][j].setIcon(new ImageIcon(Interfaz.class.getResource("/images/negro.png")));
 				panel_2.add(etiquetas[i][j]);
 			
