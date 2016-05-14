@@ -232,7 +232,7 @@ public class Interfaz {
 		
 		//SE PODRIAN PINTAR LOS 4 ELEMENTOS DE LA LISTA QUE DEVUELVE PROLOG 
 		for (p pos : resultado){
-			etiquetas[pos.getX()][pos.getY()].setIcon(new ImageIcon(Interfaz.class.getResource("/images/verde.png")));
+			etiquetas[pos.getX()][pos.getY()].setIcon(new ImageIcon(Interfaz.class.getResource("/images/color.png")));
 		}
 		JOptionPane.showMessageDialog (null, "CUATRO EN LINEA !!! ", "Ganaste", JOptionPane.INFORMATION_MESSAGE);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
