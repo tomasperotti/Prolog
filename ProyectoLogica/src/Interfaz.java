@@ -9,15 +9,12 @@ import javax.swing.JFrame;
 import java.awt.GridLayout;
 import javax.swing.JPanel;
 import java.awt.Color;
-import javax.swing.UIManager;
 
 import org.jpl7.Query;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
-import java.awt.Font;
-import javax.swing.SwingConstants;
 import javax.swing.JButton;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -175,8 +172,8 @@ public class Interfaz {
 							turnoColor.setIcon(new ImageIcon(Interfaz.class.getResource("/images/rojo.gif")));
 							turnoColor.setName("TURNO ROJO");
 							if( matriz.cuatroEnLinea("a", resultado)) gameOver(resultado);
-						//	matriz.jugadaMaquina("rojo");
-							
+						    p pos = matriz.jugadaMaquina("r");
+							cambiarColor(pos.getX(),pos.getY(),pos.getC());
 							i=0;
 						}
 					}
@@ -229,6 +226,17 @@ public class Interfaz {
 			}
 		}
 		
+	}
+	
+	private boolean cambiarColor (int x, int y, Character c){
+		boolean toReturn = false;
+		
+		if(c == 'r')
+			etiquetas[x][y].setIcon(new ImageIcon(Interfaz.class.getResource("/images/rojo.png")));
+		if(c == 'a')
+			etiquetas[x][y].setIcon(new ImageIcon(Interfaz.class.getResource("/images/azul.png")));
+		
+		return toReturn;
 	}
 	
 	/**

@@ -1,6 +1,4 @@
-import java.util.LinkedList;
 import java.util.List;
-
 import org.jpl7.Query;
 import org.jpl7.Term;
 /**
@@ -11,6 +9,7 @@ import org.jpl7.Term;
 public class Matriz {
 
 	public String [][] matriz;
+	
 	/**
 	 * Constructor que inicializa la matriz de String con vacio.
 	 */
@@ -28,6 +27,7 @@ public class Matriz {
 		}
 	
 	}
+	
 	/**
 	 * Método que retorna true si la posicion del tablero esta disponible, false en caso contrario.
 	 * @param fila
@@ -40,6 +40,7 @@ public class Matriz {
 		Query q1 = new Query(disponible);
 		return q1.hasSolution();
 	}
+	
 	/**
 	 * Método que incorpora una ficha de color a una posición ingresada por parámetro si esta disponible.
 	 * @param fila
@@ -57,6 +58,7 @@ public class Matriz {
 		}
 		return estaDisponible;
 	}
+	
 	/**
 	 * Método que retorna true si hay cuatro en línea, false en caso contrario.
 	 * @param color
@@ -74,6 +76,7 @@ public class Matriz {
 		}
 		return hayCuatro;
 	}
+	
 	/**
 	 * Método que retorna el color que contiene una determinada posición.
 	 * @param fila
@@ -88,6 +91,7 @@ public class Matriz {
 				
 		return solucion;
 	}
+	
 	/**
 	 * Método que retorna la configuración del tablero.
 	 * @return la configuración del tablero.
@@ -112,6 +116,7 @@ public class Matriz {
 		salida +="]";
 		return salida;	
 	}
+	
 	/**
 	 * Método que imprime por consola la configuración del tablero.
 	 */
@@ -119,18 +124,43 @@ public class Matriz {
 		System.out.println(getConfig());
 	}
 	
-	public void jugadaMaquina(String color) {
-		
-		/*String maq ="jugada_maquina("+color+","+getConfig()+",Ranura)";
+	public p jugadaMaquina(String color) {
+		p pos = new p(0,0,color.charAt(0));
+		String maq ="jugada_maquina("+color+",[[p(6,1,a),p(6,2,a),p(6,3,v),p(6,4,a),p(6,5,v),p(6,6,v),p(6,7,v)],[p(5,1,v),p(5,2,a),p(5,3,a),p(5,4,v),p(5,5,v),p(5,6,v),p(5,7,v)],[p(4,1,a),p(4,2,a),p(4,3,v),p(4,4,v),p(4,5,v),p(4,6,v),p(4,7,v)],[p(3,1,a),p(3,2,a),p(3,3,r),p(3,4,r),p(3,5,a),p(3,6,v),p(3,7,v)],[p(2,1,a),p(2,2,v),p(2,3,a),p(2,4,r),p(2,5,v),p(2,6,v),p(2,7,v)],[p(1,1,v),p(1,2,v),p(1,3,a),p(1,4,a),p(1,5,v),p(1,6,v),p(1,7,v)]],Ranura)";
+		//String maq ="jugada_maquina("+color+","+this.getConfig()+",Ranura)";
 		Query q1 = new Query(maq);
-		String pos = q1.oneSolution().get("Ranura").toString();
-		System.out.println(q1.hasSolution());
-		*/
+		if (q1.hasSolution()){
+			String sol = q1.oneSolution().get("Ranura").toString();
+			
+			boolean encontro = obtenerRanura(sol,pos);
+			if (encontro)
+				this.setColor(pos.getX(), pos.getY(), pos.getC()+"");
+		} 
+		return pos;
+	}
+	
+	private boolean obtenerRanura (String sol, p pos){
+		int l = sol.length();
+		boolean x = false;
+		boolean y = false;
+		for (int i = 0; i < l; i++){
+			Character c = sol.charAt(i);
+			if (c.isDigit(c)){
+				if (!x){
+					pos.setX(Integer.parseInt(c+""));
+					x = true;
+				} else if (!y){
+					pos.setY(Integer.parseInt(c+""));
+					y = true;
+					break;
+				}
+			}
+		}
+		return x && y;
 		
 	}
 	
-	
-	public void listaPosiciones(String sol, List<p> resultado){
+	private void listaPosiciones(String sol, List<p> resultado){
 		int l = sol.length();
     	int j = 0;
     	String aux;
