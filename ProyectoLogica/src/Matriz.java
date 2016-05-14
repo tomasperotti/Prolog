@@ -119,6 +119,17 @@ public class Matriz {
 		System.out.println(getConfig());
 	}
 	
+	public void jugadaMaquina(String color) {
+		
+		/*String maq ="jugada_maquina("+color+","+getConfig()+",Ranura)";
+		Query q1 = new Query(maq);
+		String pos = q1.oneSolution().get("Ranura").toString();
+		System.out.println(q1.hasSolution());
+		*/
+		
+	}
+	
+	
 	public void listaPosiciones(String sol, List<p> resultado){
 		int l = sol.length();
     	int j = 0;

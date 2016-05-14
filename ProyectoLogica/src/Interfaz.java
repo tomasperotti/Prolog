@@ -175,6 +175,8 @@ public class Interfaz {
 							turnoColor.setIcon(new ImageIcon(Interfaz.class.getResource("/images/rojo.gif")));
 							turnoColor.setName("TURNO ROJO");
 							if( matriz.cuatroEnLinea("a", resultado)) gameOver(resultado);
+						//	matriz.jugadaMaquina("rojo");
+							
 							i=0;
 						}
 					}
