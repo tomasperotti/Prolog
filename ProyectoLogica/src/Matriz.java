@@ -95,30 +95,22 @@ public class Matriz {
 	 */
 	public String getConfig () {
 		
-		String salida="";
+		String salida="[";
 		
-		for (int i=1; i < 7; i++) {
-			
+		for (int i=6; i > 0; i--) {
+			salida+= "[";
 			for (int j= 1; j < 8 ; j++ ) {
-				
-				
-				if (j==7 && i==6)
-					salida+="p("+i+","+j+","+matriz[i][j]+")]]";
-				else
-					if (j==7) 
-						salida+="p("+i+","+j+","+matriz[i][j]+")]";
-				else 
-					if(j==1 && i==1)
-						salida+="[[p("+i+","+j+","+matriz[i][j]+"),";
-				else 
-					if (j==1)
-						salida+=",[p("+i+","+j+","+matriz[i][j]+"),";
+		
+					if (j!=1)
+						salida+=",p("+i+","+j+","+matriz[i][j]+")";
 					else
-						salida+="p("+i+","+j+","+matriz[i][j]+"),";
+						salida+="p("+i+","+j+","+matriz[i][j]+")";
 			}
-				
+			salida +="]";
+			if(i != 1)
+				salida+=",";
 		}
-
+		salida +="]";
 		return salida;	
 	}
 	/**

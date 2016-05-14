@@ -25,15 +25,15 @@ cuatroH(Color, [[p(X,Y,R)|Xs]|Ys], Contador, Resultado):- cuatroH(Color, [Xs|Ys]
 %Cuatro diagonal
 
 ced(Color,[Lista | [ Lista2 | Lista3 ] ],Resultado):- 
-	cedRecorrerFila(Color,[Lista | [Lista2 | Lista3]],1,Resultado);
-	cedRecorrerFila(Color,[Lista2 | Lista3],2,Resultado);
-	cedRecorrerFila(Color,Lista3,3,Resultado).
+	cedRecorrerFila(Color,[Lista | [Lista2 | Lista3]],6,Resultado);
+	cedRecorrerFila(Color,[Lista2 | Lista3],5,Resultado);
+	cedRecorrerFila(Color,Lista3,4,Resultado).
 
 cedRecorrerFila(Color,[PrimeraFila | RestoFilas],X,Res):- 
 	cedFila(0,Color,PrimeraFila,X,1,RestoFilas),generar(0,Color,X,1,Res);
 	cedFila(0,Color,PrimeraFila,X,2,RestoFilas),generar(0,Color,X,2,Res);
 	cedFila(0,Color,PrimeraFila,X,3,RestoFilas),generar(0,Color,X,3,Res);
-	cedFila(0,Color,PrimeraFila,X,4,RestoFilas),generar(0,Color,X,4,Res).
+	cedFila(0,Color,PrimeraFila,X,4,RestoFilas),write("entro cuatro"),generar(0,Color,X,4,Res).
 
 cedFila(4,Color,Fila,PosActual,ColActual,FilasSiguientes).
 cedFila(Cont,Color, Fila, PosActual, ColActual, [ProxFila | FilasSiguientes]):- buscar(PosActual,ColActual,Fila,Color), Cont1 is Cont+1, Pos is PosActual+1, Col is ColActual+1,cedFila(Cont1,Color,ProxFila,Pos,Col,FilasSiguientes).
