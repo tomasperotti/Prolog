@@ -65,7 +65,13 @@ public class Interfaz {
 		frame = new JFrame();
 		frame.setBounds(50, 50, 720, 443);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setMaximumSize(new Dimension(720,443));
+		frame.setMinimumSize(new Dimension(720,443));
+		frame.setTitle("Cuatro en linea");
+//		frame.setIconImage(new ImageIcon());
 		frame.getContentPane().setLayout(new GridLayout(1, 0, 0, 0));
+		
+
 		
 		JPanel panel = new JPanel();
 		panel.setForeground(UIManager.getColor("Button.foreground"));
