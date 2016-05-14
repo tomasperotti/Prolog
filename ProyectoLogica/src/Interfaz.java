@@ -1,5 +1,8 @@
 import java.awt.EventQueue;
 import java.awt.*;
+import java.util.LinkedList;
+import java.util.List;
+
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -27,7 +30,7 @@ import java.awt.event.ActionEvent;
  */
 public class Interfaz {
 	
-	
+	private Matriz matriz = new Matriz ();
 	private JFrame frame;
 	private JLabel [][] etiquetas = new JLabel [7][8];
 	private JLabel [] flechas = new JLabel [8];
@@ -143,7 +146,7 @@ public class Interfaz {
 		panel.add(panel_2);
 		panel_2.setLayout(new GridLayout(7, 7, 0, 0));
 		
-		Matriz matriz = new Matriz ();
+
 		
 		//PRUEBO SI FUNCIONA
 		String t1 = "consult('4enlinea.pl')";
@@ -157,16 +160,16 @@ public class Interfaz {
 				JLabel flecha = (JLabel) arg0.getSource();
 				String numFlecha = flecha.getText();
 				Integer col = Integer.parseInt(numFlecha);
-				
+				List<p> resultado = new LinkedList<p>();
 				if(turnoColor.getText()=="TURNO AZUL") {
 					
 					for (int i=6; i>0; i--) {
 						
-						if (matriz.setColor(i, col, "azul")) {
+						if (matriz.setColor(i, col, "a")) {
 							etiquetas[i][col].setIcon(new ImageIcon(Interfaz.class.getResource("/images/azul.png")));
 							turnoColor.setText("TURNO ROJO");
 							matriz.imprimir();		
-							if( matriz.cuatroEnLinea("azul")) gameOver();
+							if( matriz.cuatroEnLinea("a", resultado)) gameOver(resultado);
 							i=0;
 
 						}
@@ -175,11 +178,12 @@ public class Interfaz {
 
 				} else {
 					for (int i=6; i>0; i--) {
-						if (matriz.setColor(i, col, "rojo")) {
+						if (matriz.setColor(i, col, "r")) {
 							etiquetas[i][col].setIcon(new ImageIcon(Interfaz.class.getResource("/images/rojo.png")));
 							turnoColor.setText("TURNO AZUL");
 							matriz.imprimir();		
-							if( matriz.cuatroEnLinea("rojo")) gameOver();
+							if( matriz.cuatroEnLinea("r", resultado)) 
+								gameOver(resultado);
 							i=0;
 
 						}
@@ -224,10 +228,12 @@ public class Interfaz {
 	/**
 	 * Método que termina la ejecución del juego.
 	 */
-	public void gameOver () {
+	public void gameOver (List<p> resultado) {
 		
 		//SE PODRIAN PINTAR LOS 4 ELEMENTOS DE LA LISTA QUE DEVUELVE PROLOG 
-		
+		for (p pos : resultado){
+			etiquetas[pos.getX()][pos.getY()].setIcon(new ImageIcon(Interfaz.class.getResource("/images/verde.png")));
+		}
 		JOptionPane.showMessageDialog (null, "CUATRO EN LINEA !!! ", "Ganaste", JOptionPane.INFORMATION_MESSAGE);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.dispose();

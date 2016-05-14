@@ -8,9 +8,11 @@ en([X,Y], [ [p(X,Y,R)| Rs] | Xs], R).
 
 % cuatro en linea(+Color, +Conf, -CuatroEnLinea) 
 
-cuatro(Color, Conf, Resultado):- cuatroAux(Color, Conf, 0, Aux), longitud(Aux,0,Long), mostrar4(Aux, Resultado,Long);
-								 trans(Conf, Traspuesta), cuatroH(Color, Traspuesta, 0, Resultado), mostrar4(Aux, Resultado,Long);
-								 ced(Color,Conf,Resultado).
+cuatro(Color, Conf, Resultado):- 
+	cuatroAux(Color, Conf, 0, Aux), longitud(Aux,0,Long), mostrar4(Aux, Resultado,Long);
+	trans(Conf, Traspuesta), cuatroH(Color, Traspuesta, 0, Resultado), longitud(Aux,0,Long), mostrar4(Aux, Resultado,Long);
+	ced(Color,Conf,Resultado).
+
 cuatroAux(Color, Conf, Contador, Resultado):- cuatroH(Color, Conf, Contador, Resultado).
 
 %Cuatro Horizontal (utilizado para vertical)
@@ -22,14 +24,19 @@ cuatroH(Color, [[p(X,Y,R)|Xs]|Ys], Contador, Resultado):- cuatroH(Color, [Xs|Ys]
 
 %Cuatro diagonal
 
-ced(Color,[Lista | [ Lista2 | Lista3 ] ],Resultado):- cedRecorrerFila(Color,[Lista | [ Lista2 | Lista3 ] ],1,Resultado);cedRecorrerFila(Color,[ Lista2 | Lista3 ],2,Resultado);cedRecorrerFila(Color,Lista3,3,Resultado).
+ced(Color,[Lista | [ Lista2 | Lista3 ] ],Resultado):- 
+	cedRecorrerFila(Color,[Lista | [Lista2 | Lista3]],1,Resultado);
+	cedRecorrerFila(Color,[Lista2 | Lista3],2,Resultado);
+	cedRecorrerFila(Color,Lista3,3,Resultado).
 
-cedRecorrerFila(Color,[PrimeraFila | RestoFilas],X,Res):- cedFila(0,Color,PrimeraFila,X,Y,RestoFilas),generar(0,Color,X,Y,Res).
+cedRecorrerFila(Color,[PrimeraFila | RestoFilas],X,Res):- 
+	cedFila(0,Color,PrimeraFila,X,1,RestoFilas),generar(0,Color,X,1,Res);
+	cedFila(0,Color,PrimeraFila,X,2,RestoFilas),generar(0,Color,X,2,Res);
+	cedFila(0,Color,PrimeraFila,X,3,RestoFilas),generar(0,Color,X,3,Res);
+	cedFila(0,Color,PrimeraFila,X,4,RestoFilas),generar(0,Color,X,4,Res).
 
 cedFila(4,Color,Fila,PosActual,ColActual,FilasSiguientes).
 cedFila(Cont,Color, Fila, PosActual, ColActual, [ProxFila | FilasSiguientes]):- buscar(PosActual,ColActual,Fila,Color), Cont1 is Cont+1, Pos is PosActual+1, Col is ColActual+1,cedFila(Cont1,Color,ProxFila,Pos,Col,FilasSiguientes).
-
-
 
 % metodos auxiliares
 
@@ -43,9 +50,8 @@ buscar(X,Y,[p(X,Y,Color) | RestoFila],Color).
 buscar(X,Y,[p(W,Z,C) | RestoFila],Color):- buscar(X,Y,RestoFila,Color).
 
 %Genera una lista con la diagonal ganadora
-
 generar(4,Color,X,Y,Res).
-generar(Cont,Color,X,Y,[p(X,Y,Color)| Res]):- Cont1 is Cont+1, X1 is X+1, Y1 is Y+1, generar(Cont1,Color,X1,Y1,Res).
+generar(Cont,Color,X,Y,[p(X,Y,Color)| Res):- Cont1 is Cont+1, X1 is X+1, Y1 is Y+1, generar(Cont1,Color,X1,Y1,Res).
 
 % Obtiene la longitud de una lista.
 
@@ -64,14 +70,14 @@ trans([S1|S2], [R1|R2], [S1|L1], [S2|M]):- trans(R1, R2, L1, M).
 
 % disponible(Ranura)
 
-disponible(Ranura, Conf) :- en(Ranura, Conf, Contenido), Contenido = vacio.
+disponible(Ranura, Conf) :- en(Ranura, Conf, Contenido), Contenido = v.
 
 % colocar ficha(+Color, +Ranura, +Conf, -ConfRes), G2130
 
 colocar_ficha(Color, [X, Y] ,[], []).
-colocar_ficha(Color, [X, Y] , [ [p(X, Y, vacio)|[]] | Xs ], [ p(X,Y,Color) | Zs ]) :- colocar_ficha(Color, [X,Y], Xs, Zs).
+colocar_ficha(Color, [X, Y] , [ [p(X, Y, v)|[]] | Xs ], [ p(X,Y,Color) | Zs ]) :- colocar_ficha(Color, [X,Y], Xs, Zs).
 colocar_ficha(Color, [X, Y] , [ [p(Z, W, C)|[]] | Xs ], [ p(Z,W,C) | Zs ]) :- colocar_ficha(Color, [X,Y], Xs, Zs).
-colocar_ficha(Color, [X, Y] , [ [p(X, Y, vacio)|Ys] | Xs ], [ p(X,Y,Color) | Zs ]) :- colocar_ficha(Color, [X,Y], [Ys|Xs], Zs).
+colocar_ficha(Color, [X, Y] , [ [p(X, Y, v)|Ys] | Xs ], [ p(X,Y,Color) | Zs ]) :- colocar_ficha(Color, [X,Y], [Ys|Xs], Zs).
 colocar_ficha(Color, [X, Y] , [ [p(Z, W, C)|Ys] | Xs ], [ p(Z,W,C) | Zs ]) :- colocar_ficha(Color, [X,Y], [Ys|Xs], Zs).
 
 % jugada maquina(+Color, +Conf, -Ranura)

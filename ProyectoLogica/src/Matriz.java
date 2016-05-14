@@ -1,3 +1,6 @@
+import java.util.LinkedList;
+import java.util.List;
+
 import org.jpl7.Query;
 import org.jpl7.Term;
 /**
@@ -19,7 +22,7 @@ public class Matriz {
 			
 				for(int j=1; j < 8; j++) {
 			
-					matriz[i][j] ="vacio";
+					matriz[i][j] ="v";
 						
 				}
 		}
@@ -32,6 +35,7 @@ public class Matriz {
 	 * @return true si la posicion del tablero esta disponible, false en caso contrario.
 	 */
 	public boolean estaDisponible (int f, int c) {
+		
 		String disponible="disponible(["+f+","+c+"],"+getConfig()+")";
 		Query q1 = new Query(disponible);
 		return q1.hasSolution();
@@ -49,7 +53,7 @@ public class Matriz {
 		
 		boolean estaDisponible = estaDisponible(f,c);
 		if (estaDisponible) {
-			matriz[f][c] =s;
+			matriz[f][c]=s;
 		}
 		return estaDisponible;
 	}
@@ -58,11 +62,17 @@ public class Matriz {
 	 * @param color
 	 * @return true si hay cuatro en línea, false en caso contrario.
 	 */
-	public boolean cuatroEnLinea(String color) {
+	public boolean cuatroEnLinea(String color, List<p> resultado) {
 		
 		String cuatro ="cuatro("+color+","+getConfig()+",Res)";
 		Query q1 = new Query(cuatro);
 		boolean hayCuatro = q1.hasSolution();
+		q1.open();
+		if (hayCuatro){
+			String sol = q1.getSolution().get("Res").toString();
+			System.out.println(sol);
+			listaPosiciones(sol,resultado);
+		}
 		return hayCuatro;
 	}
 	/**
@@ -93,22 +103,22 @@ public class Matriz {
 				
 				
 				if (j==7 && i==6)
-					salida=salida+"p("+i+","+j+","+matriz[i][j]+")]]";
+					salida+="p("+i+","+j+","+matriz[i][j]+")]]";
 				else
 					if (j==7) 
-						salida=salida+"p("+i+","+j+","+matriz[i][j]+")]";
+						salida+="p("+i+","+j+","+matriz[i][j]+")]";
 				else 
 					if(j==1 && i==1)
-						salida = salida+"[[p("+i+","+j+","+matriz[i][j]+"),";
+						salida+="[[p("+i+","+j+","+matriz[i][j]+"),";
 				else 
 					if (j==1)
-						salida = salida+",[p("+i+","+j+","+matriz[i][j]+"),";
+						salida+=",[p("+i+","+j+","+matriz[i][j]+"),";
 					else
-						salida=salida+"p("+i+","+j+","+matriz[i][j]+"),";
+						salida+="p("+i+","+j+","+matriz[i][j]+"),";
 			}
 				
 		}
-		
+
 		return salida;	
 	}
 	/**
@@ -117,5 +127,56 @@ public class Matriz {
 	public void imprimir() {
 		System.out.println(getConfig());
 	}
+	
+	public void listaPosiciones(String sol, List<p> resultado){
+		int l = sol.length();
+    	int j = 0;
+    	String aux;
+    	for (int i = 0; i < l; i++){
+    		if(sol.charAt(i) == 'p'){
+    			j = i;
+    		}else if (j != 0 && sol.charAt(i) == ')'){
+    			aux = sol.substring(j, i+1);
+    			procesarSubString (aux,resultado);
+    			j = 0;
+    		}
+    	 }
+		
+	}
 
+	private boolean procesarSubString (String aux, List<p> list){
+		int x, y;
+		x = 0;
+		y = 0;
+		Character c =' ';
+		boolean encontroX = false;
+		boolean encontroY = false;
+		boolean encontroC = false;    	
+		int l = aux.length();
+		
+		for (int i = 0; i < l; i++){
+			Character car = aux.charAt(i);
+			if (!encontroX && Character.isDigit(car)){
+				x = Integer.parseInt(Character.toString(car));
+				encontroX = true;
+			} else if (encontroX && !encontroY && Character.isDigit(car)){
+				y = Integer.parseInt(Character.toString(car));
+				encontroY = true;
+			} else if (encontroX && encontroY && !encontroC && Character.isAlphabetic(car)){
+				c= car;
+				encontroC = true;
+				break;
+			}
+		}
+		
+		if (encontroX && encontroY && encontroC){
+			p toInsert = new p(x,y,c);
+			list.add(toInsert);
+			return true;
+		}
+		
+		return false;
+		
+		
+	}
 }
