@@ -70,7 +70,6 @@ public class Matriz {
 		q1.open();
 		if (hayCuatro){
 			String sol = q1.getSolution().get("Res").toString();
-			System.out.println(sol);
 			listaPosiciones(sol,resultado);
 		}
 		return hayCuatro;
