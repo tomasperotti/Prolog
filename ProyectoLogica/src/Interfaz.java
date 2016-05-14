@@ -176,6 +176,7 @@ public class Interfaz {
 							turnoColor.setText("TURNO ROJO");
 							matriz.imprimir();		
 							if( matriz.cuatroEnLinea("a", resultado)) gameOver(resultado);
+							matriz.jugadaMaquina();
 							i=0;
 
 						}

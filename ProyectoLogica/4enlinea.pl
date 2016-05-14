@@ -9,9 +9,9 @@ en([X,Y], [ [p(X,Y,R)| Rs] | Xs], R).
 % cuatro en linea(+Color, +Conf, -CuatroEnLinea) 
 
 cuatro(Color, Conf, Resultado):- 
-	cuatroAux(Color, Conf, 0, Aux), longitud(Aux,0,Long), mostrar4(Aux, Resultado,Long);
-	trans(Conf, Traspuesta), cuatroH(Color, Traspuesta, 0, Resultado), longitud(Aux,0,Long), mostrar4(Aux, Resultado,Long);
-	ced(Color,Conf,Resultado).
+ cuatroAux(Color, Conf, 0, Aux), longitud(Aux,0,Long), mostrar4(Aux, Resultado,Long);
+ trans(Conf, Traspuesta), cuatroH(Color, Traspuesta, 0, Aux), longitud(Aux,0,Long), mostrar4(Aux, Resultado,Long);
+ ced(Color,Conf,Aux),longitud(Aux,0,Long),mostrar4(Aux,Resultado,Long).
 	
 cuatroAux(Color, Conf, Contador, Resultado):- cuatroH(Color, Conf, Contador, Resultado).
 
@@ -30,14 +30,14 @@ ced(Color,[Lista | [ Lista2 | Lista3 ] ],Resultado):-
 	cedRecorrerFila(Color,Lista3,4,Resultado).
 
 cedRecorrerFila(Color,[PrimeraFila | RestoFilas],X,Res):- 
-	cedFila(0,Color,PrimeraFila,X,1,RestoFilas),generar(0,Color,X,1,Res);
-	cedFila(0,Color,PrimeraFila,X,2,RestoFilas),generar(0,Color,X,2,Res);
-	cedFila(0,Color,PrimeraFila,X,3,RestoFilas),generar(0,Color,X,3,Res);
-	cedFila(0,Color,PrimeraFila,X,4,RestoFilas),generar(0,Color,X,4,Res);
-	cedFilaD(0,Color,PrimeraFila,X,4,RestoFilas),generarD(0,Color,X,4,Res);
-	cedFilaD(0,Color,PrimeraFila,X,5,RestoFilas),generarD(0,Color,X,5,Res);
-	cedFilaD(0,Color,PrimeraFila,X,6,RestoFilas),generarD(0,Color,X,6,Res);
-	cedFilaD(0,Color,PrimeraFila,X,7,RestoFilas),generarD(0,Color,X,7,Res).
+	cedFila(0,Color,PrimeraFila,X,1,RestoFilas),write("entro uno"),generar(0,Color,X,1,Res);
+	cedFila(0,Color,PrimeraFila,X,2,RestoFilas),write("entro dos"),generar(0,Color,X,2,Res);
+	cedFila(0,Color,PrimeraFila,X,3,RestoFilas),write("entro tres"),generar(0,Color,X,3,Res);
+	cedFila(0,Color,PrimeraFila,X,4,RestoFilas),write("entro cuatro"),generar(0,Color,X,4,Res);
+	cedFilaD(0,Color,PrimeraFila,X,4,RestoFilas),write("entro uno"),generarD(0,Color,X,4,Res);
+	cedFilaD(0,Color,PrimeraFila,X,5,RestoFilas),write("entro dos"),generarD(0,Color,X,5,Res);
+	cedFilaD(0,Color,PrimeraFila,X,6,RestoFilas),write("entro seis seis"),generarD(0,Color,X,6,Res);
+	cedFilaD(0,Color,PrimeraFila,X,7,RestoFilas),write("entro cuatro"),generarD(0,Color,X,7,Res).
 
 % Diagonal ID
 
@@ -98,10 +98,21 @@ disponible(Ranura, Conf) :- en(Ranura, Conf, Contenido), Contenido = v.
 
 % colocar ficha(+Color, +Ranura, +Conf, -ConfRes), G2130
 
-colocar_ficha(Color, [X, Y] ,[], []).
-colocar_ficha(Color, [X, Y] , [ [p(X, Y, v)|[]] | Xs ], [ p(X,Y,Color) | Zs ]) :- colocar_ficha(Color, [X,Y], Xs, Zs).
-colocar_ficha(Color, [X, Y] , [ [p(Z, W, C)|[]] | Xs ], [ p(Z,W,C) | Zs ]) :- colocar_ficha(Color, [X,Y], Xs, Zs).
-colocar_ficha(Color, [X, Y] , [ [p(X, Y, v)|Ys] | Xs ], [ p(X,Y,Color) | Zs ]) :- colocar_ficha(Color, [X,Y], [Ys|Xs], Zs).
-colocar_ficha(Color, [X, Y] , [ [p(Z, W, C)|Ys] | Xs ], [ p(Z,W,C) | Zs ]) :- colocar_ficha(Color, [X,Y], [Ys|Xs], Zs).
+colocar_ficha(Color, [X,Y], [], []).
+colocar_ficha(Color, [X,Y], [Xs|RestoFilas], [Zs|Resultado]) :- colocarAux(Color, [X,Y], Xs, Zs), colocar_ficha(Color,[X,Y], RestoFilas, Resultado).
+colocarAux(Color, [X,Y], [], []).
+colocarAux(Color, [X,Y], [p(X,Y, v)| XXs], [p(X,Y,Color)|Zs]):- colocarAux(Color, [X,Y], XXs, Zs).
+colocarAux(Color, [X,Y], [p(Z,W, C)| XXs], [p(Z,W,C)|Zs]):- colocarAux(Color, [X,Y], XXs, Zs).
 
 % jugada maquina(+Color, +Conf, -Ranura)
+
+jugada_maquina(Color, Conf, Ranura) :- jugada_ganadora(Color, Conf, R, Ranura);jugada_bloqueo(Color, Conf, Ranura).
+
+jugada_ganadora(Color, Conf, [X,Y], [X,Y]) :- colocar_ficha(Color, [X,Y], Conf, ConfRes), cuatro(Color, ConfRes, Cuatro).
+%jugada_ganadora(Color, Conf, [X,Y], Resultado) :- X>0, Y<8,Y1 is Y+1,  jugada_ganadora(Color, Conf, [X, Y1], Resultado).
+%jugada_ganadora(Color, Conf, [X,Y], Resultado) :- Y=8, X1 is X-1, jugada_ganadora(Color, Conf,[X1,1], Resultado).
+jugada_bloqueo(Color,Conf, Resultado) :- Color=a, jugada_ganadora(r, Conf, Ranura, Resultado).
+jugada_bloqueo(Color,Conf, Resultado) :- Color=r, jugada_ganadora(a, Conf, Ranura, Resultado).
+%jugada_segura(Color, Conf, Resultado) :- 
+
+
