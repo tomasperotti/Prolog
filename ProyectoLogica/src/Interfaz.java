@@ -55,7 +55,7 @@ public class Interfaz {
 	 */
 	public Interfaz() {
 		initialize();
-	}
+	}  
  
 	/**
 	 * Inicializa los contenidos del frame.

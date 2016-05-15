@@ -6,7 +6,7 @@ import org.jpl7.Term;
  * @author Tomás Perotti - Christian Bancalá
  *
  */
-public class Matriz {
+public class Matriz {   
 
 	public String [][] matriz;
 	

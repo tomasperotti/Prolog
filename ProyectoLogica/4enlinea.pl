@@ -1,6 +1,6 @@
 % en(+p, +Conf, -Contenido)
 % Retorna el contenido de la ranura pasada por parámetro
-
+ 
 en([X, Y], [ [p(Z,W,R)|Rs] | Xs], Res) :- en([X,Y], [Rs|Xs], Res).
 en([X, Y], [ [p(Z,W,R)|[]] | Xs], Res) :- en([X,Y], Xs, Res).
 en([X,Y], [ [p(X,Y,R)| Rs] | Xs], R).
