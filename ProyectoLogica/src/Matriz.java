@@ -131,16 +131,19 @@ public class Matriz {
 	 */
 	public p jugadaMaquina(String color) {
 		p pos = new p(0,0,color.charAt(0));
-		String maq ="jugada_maquina("+color+",[[p(6,1,a),p(6,2,a),p(6,3,v),p(6,4,a),p(6,5,v),p(6,6,v),p(6,7,v)],[p(5,1,v),p(5,2,a),p(5,3,a),p(5,4,v),p(5,5,v),p(5,6,v),p(5,7,v)],[p(4,1,a),p(4,2,a),p(4,3,v),p(4,4,v),p(4,5,v),p(4,6,v),p(4,7,v)],[p(3,1,a),p(3,2,a),p(3,3,r),p(3,4,r),p(3,5,a),p(3,6,v),p(3,7,v)],[p(2,1,a),p(2,2,v),p(2,3,a),p(2,4,r),p(2,5,v),p(2,6,v),p(2,7,v)],[p(1,1,v),p(1,2,v),p(1,3,a),p(1,4,a),p(1,5,v),p(1,6,v),p(1,7,v)]],Ranura)";
-		//String maq ="jugada_maquina("+color+","+this.getConfig()+",Ranura)";
+		String maq ="jugada_maquina("+color+","+this.getConfig()+",Ranura)";
 		Query q1 = new Query(maq);
+		System.out.println(this.getConfig());
 		if (q1.hasSolution()){
 			String sol = q1.oneSolution().get("Ranura").toString();
 			
 			boolean encontro = obtenerRanura(sol,pos);
+			System.out.println(pos);
 			if (encontro)
 				this.setColor(pos.getX(), pos.getY(), pos.getC()+"");
-		} 
+		} else {
+			System.out.println("zapatoto no");
+		}
 		return pos;
 	}
 	

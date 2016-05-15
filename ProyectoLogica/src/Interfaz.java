@@ -27,6 +27,7 @@ import java.awt.event.ActionEvent;
  */
 public class Interfaz {
 	
+	private String colorSeleccionado ="";
 	private JLabel turnoColor = new JLabel();
 	private Matriz matriz = new Matriz ();
 	private JFrame frame;
@@ -102,6 +103,9 @@ public class Interfaz {
 				
 				turnoColor.setIcon(new ImageIcon(Interfaz.class.getResource("/images/azul.gif")));
 				turnoColor.setName("TURNO AZUL");
+				colorSeleccionado ="azul";
+				p pos = matriz.jugadaMaquina("r");
+				cambiarColor(pos.getX(),pos.getY(),pos.getC());
 				panelBotonesInicio.setVisible(false);
 				
 				for (int i=1; i < 8 ; i++)
@@ -117,6 +121,9 @@ public class Interfaz {
 			public void mouseClicked(MouseEvent e) {
 				turnoColor.setIcon(new ImageIcon(Interfaz.class.getResource("/images/rojo.gif")));
 				turnoColor.setName("TURNO ROJO");
+				colorSeleccionado ="rojo";
+				p pos = matriz.jugadaMaquina("a");
+				cambiarColor(pos.getX(),pos.getY(),pos.getC());
 				panelBotonesInicio.setVisible(false);
 			
 				for (int i=1; i < 8 ; i++)
@@ -161,32 +168,44 @@ public class Interfaz {
 				String numFlecha = flecha.getName();
 				Integer col = Integer.parseInt(numFlecha);
 				List<p> resultado = new LinkedList<p>();
-				if(turnoColor.getName().equals("TURNO AZUL")) {
+				
 					
 					for (int i=6; i>0; i--) {
-						if (matriz.setColor(i, col, "a")) {
-							etiquetas[i][col].setIcon(new ImageIcon(Interfaz.class.getResource("/images/azul.png")));
-							turnoColor.setIcon(new ImageIcon(Interfaz.class.getResource("/images/rojo.gif")));
-							turnoColor.setName("TURNO ROJO");
-							if( matriz.cuatroEnLinea("a", resultado)) 
-								gameOver(resultado,"azul");
-						    /*p pos = matriz.jugadaMaquina("r");
-							cambiarColor(pos.getX(),pos.getY(),pos.getC());*/
-							i=0;
-						}
+							if(colorSeleccionado.equals("azul")){
+								if(matriz.setColor(i, col, "a")){
+									etiquetas[i][col].setIcon(new ImageIcon(Interfaz.class.getResource("/images/"+colorSeleccionado+".png")));
+									turnoColor.setIcon(new ImageIcon(Interfaz.class.getResource("/images/rojo.gif")));
+									turnoColor.setName("TURNO ROJO");
+									if( matriz.cuatroEnLinea("a", resultado)) 
+										gameOver(resultado,"azul");
+									else {
+										p pos = matriz.jugadaMaquina("r");
+										cambiarColor(pos.getX(),pos.getY(),pos.getC());
+										if( matriz.cuatroEnLinea("r", resultado)) 
+											gameOver(resultado,"rojo");									}
+									i=0;
+								}
+								
+							} else {
+								if(matriz.setColor(i, col, "r")){
+									etiquetas[i][col].setIcon(new ImageIcon(Interfaz.class.getResource("/images/"+colorSeleccionado+".png")));
+									turnoColor.setIcon(new ImageIcon(Interfaz.class.getResource("/images/azul.gif")));
+									turnoColor.setName("TURNO AZUL");
+									if( matriz.cuatroEnLinea("r", resultado)) 
+										gameOver(resultado,"rojo");
+									else {
+										p pos = matriz.jugadaMaquina("a");
+										cambiarColor(pos.getX(),pos.getY(),pos.getC());
+										if( matriz.cuatroEnLinea("a", resultado)) 
+											gameOver(resultado,"azul");
+									}
+									i=0;
+								}
+							
+							}
+						
+						
 					}
-				} else {
-					for (int i=6; i>0; i--) {
-						if (matriz.setColor(i, col, "r")) {
-							etiquetas[i][col].setIcon(new ImageIcon(Interfaz.class.getResource("/images/rojo.png")));
-							turnoColor.setIcon(new ImageIcon(Interfaz.class.getResource("/images/azul.gif")));
-							turnoColor.setName("TURNO AZUL");
-							if( matriz.cuatroEnLinea("r", resultado)) 
-								gameOver(resultado,"rojo");
-							i=0;
-						}
-					}
-				}
 			}
 		};
 		
@@ -226,17 +245,15 @@ public class Interfaz {
 	 * @param c color
 	 */
 	private void cambiarColor (int x, int y, Character c){
-		if(c == 'r')
+		if(c == 'r'){
 			etiquetas[x][y].setIcon(new ImageIcon(Interfaz.class.getResource("/images/rojo.png")));
 			turnoColor.setName("TURNO AZUL");
 			turnoColor.setIcon(new ImageIcon(Interfaz.class.getResource("/images/azul.gif")));
-
-
-		if(c == 'a')
+		} else if (c == 'a'){
 			etiquetas[x][y].setIcon(new ImageIcon(Interfaz.class.getResource("/images/azul.png")));
 			turnoColor.setName("TURNO ROJO");
 			turnoColor.setIcon(new ImageIcon(Interfaz.class.getResource("/images/rojo.gif")));
-
+		}
 
 	}
 	
