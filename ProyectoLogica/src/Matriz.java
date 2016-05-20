@@ -28,7 +28,7 @@ public class Matriz {
 	
 	}
 	
-	/**
+	/** 
 	 * Método que retorna true si la posicion del tablero esta disponible, false en caso contrario.
 	 * @param fila
 	 * @param columna
@@ -193,6 +193,21 @@ public class Matriz {
     		}
     	 }
 		
+	}
+	
+	/**
+	 * Verifica si la matriz está llena 
+	 * @return
+	 */
+	public boolean estaLlena (){
+		boolean toReturn = false;
+	
+		String maq ="estaLlena("+this.getConfig()+")";
+		Query q1 = new Query(maq);
+		if (q1.hasSolution())
+			toReturn = true;
+		
+		return toReturn;
 	}
 	
 	/**

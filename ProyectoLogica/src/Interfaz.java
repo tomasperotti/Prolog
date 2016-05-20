@@ -179,10 +179,15 @@ public class Interfaz {
 									if( matriz.cuatroEnLinea("a", resultado)) 
 										gameOver(resultado,"azul");
 									else {
-										p pos = matriz.jugadaMaquina("r");
-										cambiarColor(pos.getX(),pos.getY(),pos.getC());
-										if( matriz.cuatroEnLinea("r", resultado)) 
-											gameOver(resultado,"rojo");									}
+										if(matriz.estaLlena()){
+											empate();
+										} else {
+											p pos = matriz.jugadaMaquina("r");
+											cambiarColor(pos.getX(),pos.getY(),pos.getC());
+											if( matriz.cuatroEnLinea("r", resultado)) 
+												gameOver(resultado,"rojo");			
+										}
+									}
 									i=0;
 								}
 								
@@ -258,14 +263,25 @@ public class Interfaz {
 	}
 	
 	/**
-	 * Método que termina la ejecución del juego.
+	 * Método que termina la ejecución del juego, informando el ganador.
 	 */
-	public void gameOver (List<p> resultado, String color) {
+	private void gameOver (List<p> resultado, String color) {
 		
 		for (p pos : resultado){
 			etiquetas[pos.getX()][pos.getY()].setIcon(new ImageIcon(Interfaz.class.getResource("/images/color.png")));
 		}
 		JOptionPane.showMessageDialog (null, "¡CUATRO EN LINEA!\nGanador: jugador "+color+"", "Final del juego", JOptionPane.INFORMATION_MESSAGE);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.dispose();
+	}
+	
+	/**
+	 * Método que termina la ejecución del juego en caso de empate.
+	 * 
+	 */
+	private void empate () {
+		
+		JOptionPane.showMessageDialog (null, "¡Empate!", "Final del juego", JOptionPane.INFORMATION_MESSAGE);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.dispose();
 	}
