@@ -11,10 +11,9 @@ en([X,Y], [ [p(X,Y,R)| Rs] | Xs], R).
 % Si es true retorna la lista que conforma cuatro en linea, si es false retorna false.
 
 cuatro(Color, Conf, Resultado):- 
-
  cuatroH(Color, Conf, 0, 4, Aux), longitud(Aux,0,Long), mostrar(4,Aux, Resultado,Long);
  trans(Conf, Traspuesta),cuatroH(Color, Traspuesta, 0,4,Aux), longitud(Aux,0,Long), mostrar(4,Aux, Resultado,Long);
-ced(Color,Conf,4,Resultado).
+ ced(Color,Conf,4,Resultado).
 
  
 %Cuatro Horizontal (utilizado para vertical)
@@ -24,10 +23,10 @@ cuatroH(Color, Conf, Limite, Limite, []).
 cuatroH(Color, [[p(X,Y,Color)|Xs]|Ys], Contador, Limite, [p(X,Y,Color)|Resultado]):- Contador1 is Contador+1, cuatroH(Color, [Xs|Ys], Contador1, Limite, Resultado).
 cuatroH(Color, [[p(X,Y,R)|Xs]|Ys], Contador, Limite, Resultado):- R \= Color, cuatroH(Color, [Xs|Ys], 0, Limite, Resultado).
 
-ced(Color,Conf,Limite,Res):-
-	cedRF(Limite,6,Conf,R1), cuatroH(Color,R1,0,Limite,R2), longitud(R2,0,Long), mostrar(Limite,R2, Res,Long);
-	cedRF(Limite,5,Conf,R1), cuatroH(Color,R1,0,Limite,R2), longitud(R2,0,Long), mostrar(Limite,R2, Res,Long);
-	cedRF(Limite,4,Conf,R1), cuatroH(Color,R1,0,Limite,R2), longitud(R2,0,Long), mostrar(Limite,R2, Res,Long).
+ced(Color,[PrimeraFila | [SegundaFila | TercerFila]],Limite,Res):-
+	cedRF(Limite,6,[PrimeraFila | [SegundaFila | TercerFila]],R1), cuatroH(Color,R1,0,Limite,R2), longitud(R2,0,Long), mostrar(Limite,R2,Res,Long);
+	cedRF(Limite,5,[SegundaFila | TercerFila],R3), cuatroH(Color,R3,0,Limite,R4), longitud(R4,0,Long), mostrar(Limite,R4, Res,Long);
+	cedRF(Limite,4,TercerFila,R5), cuatroH(Color,R5,0,Limite,R6), longitud(R6,0,Long), mostrar(Limite,R6, Res,Long).
 
 %Cuatro diagonal ID
 cedRF(Limite, X, [PrimeraFila | RestoFilas],Res):- 
@@ -42,10 +41,12 @@ cedRF(Limite, X, [PrimeraFila | RestoFilas],Res):-
 	Res = [L1,L2,L3,L4,L5,L6,L7,L8].
 
 cedID(0, X, Y, Fila, RestoFilas, []).
+cedID(C, X, Y, Fila, [], [Pos | Lista]):- buscar(X,Y,Fila,Pos), X1 is X - 1, Y1 is Y + 1, C1 is C - 1, cedID(C1, X1, Y1, [], [], Lista).
 cedID(C, X, Y, Fila, [FilaSig | Resto], [Pos | Lista]):- buscar(X,Y,Fila,Pos), X1 is X - 1, Y1 is Y + 1, C1 is C - 1, cedID(C1, X1, Y1, FilaSig, Resto, Lista).
 
 
 cedDI(0, X, Y, Fila, RestoFilas, []).
+cedDI(C, X, Y, Fila, [], [Pos | Lista]):- buscar(X,Y,Fila,Pos), X1 is X - 1, Y1 is Y - 1, C1 is C - 1, cedDI(C1, X1, Y1, [], [], Lista).
 cedDI(C, X, Y, Fila, [FilaSig | Resto], [Pos | Lista]):- buscar(X,Y,Fila,Pos), X1 is X - 1, Y1 is Y - 1, C1 is C - 1, cedDI(C1, X1, Y1, FilaSig, Resto, Lista).
 %Busca en una lista la posicion cuyas coordenadas son X,Y y permite obtener su color actual.
 %ACA AGREGA
