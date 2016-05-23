@@ -133,17 +133,13 @@ public class Matriz {
 		p pos = new p(0,0,color.charAt(0));
 		String maq ="jugada_maquina("+color+","+this.getConfig()+",Ranura)";
 		Query q1 = new Query(maq);
-		System.out.println(this.getConfig());
 		if (q1.hasSolution()){
 			String sol = q1.oneSolution().get("Ranura").toString();
 			
 			boolean encontro = obtenerRanura(sol,pos);
-			System.out.println(pos);
 			if (encontro)
 				this.setColor(pos.getX(), pos.getY(), pos.getC()+"");
-		} else {
-			System.out.println("zapatoto no");
-		}
+		} 
 		return pos;
 	}
 	
