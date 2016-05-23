@@ -152,13 +152,14 @@ jugada_segura(Color, Conf, [X,Y]) :-
 	not(jugada_ganadora(OtroColor, ConfRes, R,Cuatro)),
 	buscarAux(X,Y,Dos,Color).
 jugada_segura(Color, Conf, [X,Y]) :- 
-	jugada_inicial(Color, Conf, [X,Y]),
-	colocar_ficha(Color, [X,Y], Conf, ConfRes),
-	colorContrario(Color, OtroColor),
-	not(jugada_ganadora(OtroColor, ConfRes, R,Cuatro)).
+	jugada_inicial(Color, Conf, [X,Y]).
 
 buscarAux(X,Y,[p(X,Y,Color) | RestoFila],Color).
 buscarAux(X,Y,[p(W,Z,C) | RestoFila],Color):- buscarAux(X,Y,RestoFila,Color).
+
+jugada_inicial(Color,[FilaActual | Resto],[X,Y]):- 
+	obtenerDisponibles(7,[FilaActual | Resto],FilaActual,L,X), L \= [], random_member(Y, L), colocar_ficha(Color, [X,Y], [FilaActual | Resto], ConfRes), colorContrario(Color, OtroColor), not(jugada_ganadora(OtroColor, ConfRes, R,Cuatro)); 
+	jugada_inicial(Color,Resto,[X,Y]).
 
 jugada_inicial(Color,[FilaActual | Resto],[X,Y]):- 
 	obtenerDisponibles(7,[FilaActual | Resto],FilaActual,L,X), L \= [], random_member(Y, L); 
