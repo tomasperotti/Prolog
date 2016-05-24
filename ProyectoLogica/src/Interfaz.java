@@ -27,7 +27,7 @@ import java.awt.event.ActionEvent;
  */
 public class Interfaz {
 	
-	private String colorSeleccionado ="";
+	private String a,b,a1,b2,bMayus;
 	private JLabel turnoColor = new JLabel();
 	private Matriz matriz = new Matriz ();
 	private JFrame frame;
@@ -100,10 +100,13 @@ public class Interfaz {
 		
 		botonAzul.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
 				turnoColor.setIcon(new ImageIcon(Interfaz.class.getResource("/images/azul.gif")));
 				turnoColor.setName("TURNO AZUL");
-				colorSeleccionado ="azul";
+				a = "azul";
+				b = "rojo";
+				a1 = "a";
+				b2 = "r";
+				bMayus = "ROJO";
 				p pos = matriz.jugadaMaquina("r");
 				cambiarColor(pos.getX(),pos.getY(),pos.getC());
 				panelBotonesInicio.setVisible(false);
@@ -121,7 +124,11 @@ public class Interfaz {
 			public void mouseClicked(MouseEvent e) {
 				turnoColor.setIcon(new ImageIcon(Interfaz.class.getResource("/images/rojo.gif")));
 				turnoColor.setName("TURNO ROJO");
-				colorSeleccionado ="rojo";
+				a = "rojo";
+				b = "azul";
+				a1 = "r";
+				b2 = "a";
+				bMayus = "AZUL";
 				p pos = matriz.jugadaMaquina("a");
 				cambiarColor(pos.getX(),pos.getY(),pos.getC());
 				panelBotonesInicio.setVisible(false);
@@ -168,49 +175,29 @@ public class Interfaz {
 				String numFlecha = flecha.getName();
 				Integer col = Integer.parseInt(numFlecha);
 				List<p> resultado = new LinkedList<p>();
-				
-					
-					for (int i=6; i>0; i--) {
-							if(colorSeleccionado.equals("azul")){
-								if(matriz.setColor(i, col, "a")){
-									etiquetas[i][col].setIcon(new ImageIcon(Interfaz.class.getResource("/images/"+colorSeleccionado+".png")));
-									turnoColor.setIcon(new ImageIcon(Interfaz.class.getResource("/images/rojo.gif")));
-									turnoColor.setName("TURNO ROJO");
-									if( matriz.cuatroEnLinea("a", resultado)) 
-										gameOver(resultado,"azul");
-									else {
-										if(matriz.estaLlena()){
-											empate();
-										} else {
-											p pos = matriz.jugadaMaquina("r");
-											cambiarColor(pos.getX(),pos.getY(),pos.getC());
-											if( matriz.cuatroEnLinea("r", resultado)) 
-												gameOver(resultado,"rojo");			
-										}
-									}
-									i=0;
-								}
-								
+			
+				for (int i=6; i>0; i--) {
+					if(matriz.setColor(i, col, a1)){
+						etiquetas[i][col].setIcon(new ImageIcon(Interfaz.class.getResource("/images/"+a+".png")));
+						turnoColor.setIcon(new ImageIcon(Interfaz.class.getResource("/images/"+b+".gif")));
+						turnoColor.setName("TURNO "+bMayus);
+						if( matriz.cuatroEnLinea(a1, resultado)) 
+							gameOver(resultado,a);
+						else {
+							if(matriz.estaLlena()){
+								empate();
 							} else {
-								if(matriz.setColor(i, col, "r")){
-									etiquetas[i][col].setIcon(new ImageIcon(Interfaz.class.getResource("/images/"+colorSeleccionado+".png")));
-									turnoColor.setIcon(new ImageIcon(Interfaz.class.getResource("/images/azul.gif")));
-									turnoColor.setName("TURNO AZUL");
-									if( matriz.cuatroEnLinea("r", resultado)) 
-										gameOver(resultado,"rojo");
-									else {
-										p pos = matriz.jugadaMaquina("a");
-										cambiarColor(pos.getX(),pos.getY(),pos.getC());
-										if( matriz.cuatroEnLinea("a", resultado)) 
-											gameOver(resultado,"azul");
-									}
-									i=0;
-								}
-							
+								p pos = matriz.jugadaMaquina(b2);
+								cambiarColor(pos.getX(),pos.getY(),pos.getC());
+								if( matriz.cuatroEnLinea(b2, resultado)) 
+									gameOver(resultado,b);	
+								if(matriz.estaLlena())
+									empate();
 							}
-						
-						
+						}
+						break;
 					}
+				}
 			}
 		};
 		
