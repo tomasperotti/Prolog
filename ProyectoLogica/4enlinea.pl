@@ -154,11 +154,15 @@ combinacionN(N,Color, Conf, Resultado):- ced(Color,Conf,N,Resultado);
 	horizontal(Color, Conf, 0,N, Aux), longitud(Aux,0,Long), mostrar(N,Aux, Resultado,Long);
 	trans(Conf, Transpuesta), horizontal(Color, Transpuesta, 0,N, Aux), longitud(Aux,0,Long), mostrar(N,Aux, Resultado,Long).
 
-% COMPLETAR	
+% buscarAux (X, Y, Conf, Color)
+% busca en una fila la posicion X,Y con un determinado Color. 
 
 buscarAux(X,Y,[p(X,Y,Color) | RestoFila],Color).
 buscarAux(X,Y,[p(W,Z,C) | RestoFila],Color):- buscarAux(X,Y,RestoFila,Color).
-% COMPLETAR
+
+% obtenerDisponibles (Cont, Conf, FilaActual, ListaResultado, X)
+% obtiene todas las posiciones disponibles de una fila (es decir todas las p(X,Y,v) de una fila)
+% y las retorna en ListaResultado. En X retorna la coordenada de la fila. 
 
 obtenerDisponibles(0,Conf, FilaActual,[], X).
 obtenerDisponibles(Cont, Conf, [p(X,Y,v) | R], [Y | L], X):- 
@@ -205,11 +209,11 @@ trans([], _,[],[]).
 trans([S1|S2], [], [S1|L1], [S2|M]):- trans([], [], L1, M).
 trans([S1|S2], [R1|R2], [S1|L1], [S2|M]):- trans(R1, R2, L1, M).
 
-%COMPLETAR (BUSCAR(+X,Y ...)
-%Busca en una lista la posicion cuyas coordenadas son X,Y.
+%buscar(X,Y,fila,Pos)
+%Busca en una lista la posicion cuyas coordenadas son X,Y y la retorna en Pos.
 
 buscar(X,Y,[p(X,Y,C) | RestoFila],p(X,Y,C)).
-buscar(X,Y,[p(W,Z,C) | RestoFila],Diagonales):- buscar(X,Y,RestoFila,Diagonales).
+buscar(X,Y,[p(W,Z,C) | RestoFila],Pos):- buscar(X,Y,RestoFila,Pos).
 	
 % mostrar(+N,+Lista, -Resultado, +Cont)
 % Muestra los ultimos n elementos de una lista
