@@ -25,14 +25,18 @@ horizontal(Color, Conf, Limite, Limite, []).
 horizontal(Color, [[p(X,Y,Color)|Xs]|Ys], Contador, Limite, [p(X,Y,Color)|Resultado]):- Contador1 is Contador+1, horizontal(Color, [Xs|Ys], Contador1, Limite, Resultado).
 horizontal(Color, [[p(X,Y,R)|Xs]|Ys], Contador, Limite, Resultado):- R \= Color, horizontal(Color, [Xs|Ys], 0, Limite, Resultado).
 
-% ced(Color,Conf,Limite,Res) COMPLETAR
+% ced(Color,Conf,Limite,Res) 
+% Si es true retorna en Res una lista con N fichas en diagonal consecutivas   
+% de un Color. La cantidad de fichas "N" a analizar será establecida en Limite.
 
 ced(Color,[PrimeraFila | [SegundaFila | TercerFila]],Limite,Res):-
 	cedRF(Limite,6,[PrimeraFila | [SegundaFila | TercerFila]],R1), horizontal(Color,R1,0,Limite,R2), longitud(R2,0,Long), mostrar(Limite,R2,Res,Long);
 	cedRF(Limite,5,[SegundaFila | TercerFila],R3), horizontal(Color,R3,0,Limite,R4), longitud(R4,0,Long), mostrar(Limite,R4, Res,Long);
 	cedRF(Limite,4,TercerFila,R5), horizontal(Color,R5,0,Limite,R6), longitud(R6,0,Long), mostrar(Limite,R6, Res,Long).
 	
-% COMPLETAR
+% cedRF(Limite,X,Conf,Res)
+% Recorre una fila X de Conf. Si es true retorna en Res todas
+% las diagonales que surgen de dicha fila.
 
 cedRF(Limite, X, [PrimeraFila | RestoFilas],Res):- 
 	cedID(Limite,X,1,PrimeraFila, RestoFilas,L1),
@@ -44,6 +48,7 @@ cedRF(Limite, X, [PrimeraFila | RestoFilas],Res):-
 	cedDI(Limite,X,6,PrimeraFila, RestoFilas,L7),
 	cedDI(Limite,X,7,PrimeraFila, RestoFilas,L8),
 	Res = [L1,L2,L3,L4,L5,L6,L7,L8].
+
 
 %cedID (+Contador,+X,+Y,+Fila,+RestoFilas,-Lista)
 %Almacena las diagonales que se producen de izquierda a derecha en una lista 
